@@ -47,13 +47,14 @@ nombrePaciente varchar (100) not null,
 apellidoPaciente varchar (100) not null,
 fechaNacimientoPaciente DATE not null,
 edadPaciente int (10) not null,
-motivoCita varchar (500) not null,
+motivoCita varchar (5000) not null,
 tipoCita varchar (100) not null,
-notasMedico varchar (500) not null,
+notasMedico varchar (5000) not null,
 fk_id_usuario int (10) NOT NULL,
 FOREIGN KEY (fk_id_usuario) REFERENCES usuario(idUsuario) 
 ON DELETE CASCADE ON UPDATE CASCADE);
 create table cita_productos (
+cantidad_producto int (10) not null,
 fk_id_cita int (10) not null,
 fk_id_producto int (10) not null,
 FOREIGN KEY (fk_id_cita) REFERENCES cita_medica (idCita),
