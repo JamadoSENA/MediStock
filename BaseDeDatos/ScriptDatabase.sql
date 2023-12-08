@@ -59,3 +59,6 @@ fk_id_producto int (10) not null,
 FOREIGN KEY (fk_id_cita) REFERENCES cita_medica (idCita),
 FOREIGN KEY (fk_id_producto) REFERENCES producto (idProducto) 
 ON DELETE CASCADE ON UPDATE CASCADE);
+
+Insert into rol Values (1, "Administrador");
+Insert into rol Values (2, "Medico");
