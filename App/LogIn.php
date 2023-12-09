@@ -7,6 +7,8 @@
 <link rel="shortcut icon" href="Recursos/img/LogoHeadMediStock.png" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
 integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <style>
 .divider:after,
@@ -34,7 +36,7 @@ height: 100%;
           class="img-fluid" alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <form>
+        <form  action="../Config/Functions.php" method="POST">
         <h1>Iniciar Sesion</h1>
           <div class="divider d-flex align-items-center my-4">
           </div>
@@ -42,19 +44,20 @@ height: 100%;
           <!-- Email input -->
           <div class="form-outline mb-4">
             <input type="email" id="form3Example3" class="form-control form-control-lg"
-              placeholder="Ingresar un correo valido" />
+              placeholder="Ingresar un correo valido" name="correo" required/>
             <label class="form-label" for="form3Example3">Correo Electronico</label>
           </div>
 
           <!-- Password input -->
           <div class="form-outline mb-3">
             <input type="password" id="form3Example4" class="form-control form-control-lg"
-              placeholder="Ingresar contraseña" />
+              placeholder="Ingresar contraseña" name="contrasenia" required/>
+            <input type="hidden" name="accion" value="acceso_user">
             <label class="form-label" for="form3Example4">Contraseña</label>
           </div>
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="button" class="btn btn-success btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">LogIn</button>
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Ingresar</button>
           </div>
 
         </form>
