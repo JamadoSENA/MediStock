@@ -21,22 +21,22 @@ function acceso_user() {
     session_start();
     $_SESSION['correo']=$correo;
 
-    $conexion=mysqli_connect("localhost","root","","r_user");
+    $conexion=mysqli_connect("localhost","root","","MediStock");
     $consulta= "SELECT * FROM usuario WHERE correoUsuario='$correo' AND contraseniaUsuario='$contrasenia'";
     $resultado=mysqli_query($conexion, $consulta);
     $filas=mysqli_fetch_array($resultado);
 
     if($filas['fk_id_rol'] == 1){ //Administrador
 
-        header('Location: ../App/Views/Administrador.php');
+        header('Location: ../App/Views/Administrador/AdministradorUsuarios.php');
 
     }else if($filas['fk_id_rol'] == 2){ //Personal
 
-        header('Location: ../App/Views/Personal.php');
+        header('Location: ../App/Views/PersonalMedico/PersonalMedicoUsuarios.php');
 
     }else{
 
-        header('Location: login.php');
+        header('Location: ../App/LogIn.php');
         session_destroy();
 
     }

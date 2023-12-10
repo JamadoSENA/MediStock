@@ -1,3 +1,19 @@
+<?php
+
+session_start();
+error_reporting(0);
+
+$validar = $_SESSION['correo'];
+
+if( $validar == null || $validar = ''){
+
+  header("Location: ../LogIn.php");
+  die();
+  
+}
+
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -5,11 +21,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MediStock</title>
-  <link rel="shortcut icon" href="../Recursos/img/LogoHeadMediStock.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../../Recursos/img/LogoHeadMediStock.png" type="image/x-icon">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../Recursos/css/Personal.css">
+  <link rel="stylesheet" href="../../Recursos/css/Administrador.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 </head>
 
@@ -17,11 +33,13 @@
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-between justify-content-lg-start">
       <div class="col-6 col-lg-6 d-flex justify-content-lg-start mt-3 mt-lg-0">
-        <img src="../Recursos/img/LogoHeaderMediStock.png" alt="Logo_SENA" width="auto" height="80"
+        <img src="../../Recursos/img/LogoHeaderMediStock.png" alt="Logo MediStock" width="auto" height="80"
           style="margin-top: 4%; margin-bottom: 20%;" />
       </div>
       <div class="col-6 col-lg-6 d-flex justify-content-end mt-3 mt-lg-0">
-        <a type="button" class="btn btn-secondary" href="../App/LogIn.php"
+        <a type="button" class="btn btn-dark" href="../../LogIn.php"
+        style="margin-top: 4%; margin-bottom: 20%; margin-right:20px;">Perfil</a>
+        <a type="button" class="btn btn-secondary" href="../../LogIn.php"
         style="margin-top: 4%; margin-bottom: 20%;">Cerrar sesion</a>
       </div>
     </div>
@@ -34,32 +52,26 @@
     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="0 0 24 24">
     </svg>
-    <span class="fs-4">Personal Medico</span>
+    <span class="fs-4">Administrador</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <a href="#" class="nav-link text-dark">
+        <a href="AdministradorUsuarios.php" class="nav-link text-dark">
           <svg class="bi bi-people me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Usuarios
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-dark">
+        <a href="AdministradorProveedores.php" class="nav-link text-dark">
           <svg class="bi bi-card-checklist me-2" width="16" height="16"><use xlink:href="#table"/></svg>
           Proveedores
         </a>
       </li>
       <li>
-        <a href="#" class="nav-link text-dark">
+        <a href="AdministradorProductos.php" class="nav-link text-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Productos
-        </a>
-      </li>
-      <li>
-        <a href="#" class="nav-link text-dark">
-          <svg class="bi bi-search me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
-          Citas Medicas
         </a>
       </li>
     </ul>
@@ -67,41 +79,43 @@
   <div class="col-9 border-left custom-form">
       <br>
       <div>
-        <h4 class="mb-3">Dashboard de usuarios
-        <a href="crear_usuario_form.php"><button class="btn btn-lg float-end custom-btn btn-success" type="submit"
-            style="font-size: 15px; margin-right: 5px;">+ Crear
-            usuario</button></a>
+        <h4 class="mb-3">Dashboard de Productos
+        <a href="Forms/CrearUsuarioAdmin.php"><button class="btn btn-lg float-end custom-btn btn-success" type="submit"
+            style="font-size: 15px; margin-right: 5px;">+ Registrar producto</button></a>
         </h4>
       </div>
       <br>
       <div class="table-responsive vh-80">
-        <table id="tablaUsuarios" class="table table-striped table-hover sticky-header">
-          <caption>Esta tabla muestra los usuarios existentes.</caption>
+        <table id="tablaProductos" class="table table-striped table-hover sticky-header">
+          <caption>Esta tabla muestra los productos registrados.</caption>
           <thead>
             <tr>
               <th scope="col">Nombre</th>
-              <th scope="col">Departamento</th>
-              <th scope="col">Telefono</th>
-              <th scope="col">Correo</th>
+              <th scope="col">Fecha Caducidad</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Proveedor</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <?php
             
-            require("../../Config/DataBase.php");
+            require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT idUsuario, CONCAT(nombreUsuario, ' ', apellidoUsuario) AS nombre_completo, 
-            departamentoUsuario, telefonoUsuario, correoUsuario FROM usuario");
+            $sql = $conexion->query("SELECT * from producto
+            INNER JOIN proveedor ON producto.fk_id_proveedor = proveedor.idProveedor 
+            ORDER BY fechaRegistroProducto DESC");
 
             while ($resultado = $sql->fetch_assoc()){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['nombre_completo']?></td>
-              <td scope="row"><?php echo $resultado ['departamentoUsuario']?></td>
-              <td scope="row"><?php echo $resultado ['telefonoUsuario']?></td>
-              <td scope="row"><?php echo $resultado ['correoUsuario']?></td>
+              <td scope="row"><?php echo $resultado ['nombreProducto']?></td>
+              <td scope="row"><?php echo $resultado ['fechaCaducidadProducto']?></td>
+              <td scope="row"><?php echo $resultado ['cantidadProducto']?></td>
+              <td scope="row"><?php echo $resultado ['estadoProducto']?></td>
+              <td scope="row"><?php echo $resultado ['fk_id_proveedor']?></td>
               <td scope="row">
                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -111,9 +125,9 @@
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="actualizar_usuario_form.php?idUsuario=<?php echo $resultado['idUsuario']?>" class="dropdown-item">Actualizar</a></li>
-                  <li><a href="detalles_usuario_form.php?idUsuario=<?php echo $resultado['idUsuario']?>" class="dropdown-item">Detalles</a></li>
-                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="eliminar_usuario.php?Id=<?php echo $resultado['idUsuario']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                  <li><a href="Forms/ActualizarProductoAdmin.php?php echo $resultado['idProducto']?>" class="dropdown-item">Actualizar</a></li>
+                  <li><a href="Forms/DetallesProductoAdmin.php?php echo $resultado['idProducto']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarProducto.php?php echo $resultado['idProducto']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
                         height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path
                           d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
@@ -145,9 +159,9 @@
     crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-<script src="../Recursos/js/Personal.js"></script>
+<script src="../../Recursos/js/Administrador.js"></script>
 <script type="text/javascript">
-    let table = new DataTable('#tablaUsuarios', {
+    let table = new DataTable('#tablaProductos', {
     //Para cambiar el lenguaje a español
     "language": {
         "lengthMenu": "Mostrar _MENU_ registros",
