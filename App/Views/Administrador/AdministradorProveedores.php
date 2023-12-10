@@ -39,7 +39,7 @@ if( $validar == null || $validar = ''){
       <div class="col-6 col-lg-6 d-flex justify-content-end mt-3 mt-lg-0">
         <a type="button" class="btn btn-dark" href="../../LogIn.php"
         style="margin-top: 4%; margin-bottom: 20%; margin-right:20px;">Perfil</a>
-        <a type="button" class="btn btn-secondary" href="../../LogIn.php"
+        <a type="button" class="btn btn-secondary" href="../../../Config/SignOut.php"
         style="margin-top: 4%; margin-bottom: 20%;">Cerrar sesion</a>
       </div>
     </div>
