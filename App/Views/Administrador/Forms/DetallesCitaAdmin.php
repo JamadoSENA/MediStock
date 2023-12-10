@@ -88,7 +88,6 @@ if( $validar == null || $validar = ''){
         <h4 class="mb-3">Detalles Cita Medica
         </h4>
       </div>
-      <br>
       <div class="col-12 custom-form vh-80">
       <?php
             
@@ -99,56 +98,79 @@ if( $validar == null || $validar = ''){
             $row = $resultado->fetch_assoc();
             
       ?>
+      <input type="hidden" class="form-control" name="idCita" value="<?php echo $row['idCita'] ?>">
+      <div class="row g-3">
+      <h6>Informacion Paciente</h6>
       <div class="col-sm-6">
-      <label id="ClienteNIT" for="document" class="form-label">NIT</label>
-      <input name="ClienteNIT" type="number" class="form-control" 
-       value="<?php echo $row['pk_id_cliente']?>" disabled readonly>
+      <label id="documentoPaciente" for="document" class="form-label">Documento</label>
+      <input name="documentoPaciente" type="number" class="form-control" 
+       value="<?php echo $row['documentoPaciente']?>" disabled readonly>
       </div>
-            <div class="col-sm-6">
-            <label id="ClienteNombre" for="name" class="form-label">Nombre</label>
-              <input name="ClienteNombre" type="text" class="form-control" 
-              value="<?php echo $row['cliNombre']?>" disabled readonly>
-            </div>
-            <div class="col-md-6">
-              <label id="ClienteCorreo" for="email" class="form-label">Correo</label>
-              <input name="ClienteCorreo" type="email" class="form-control"
-                value="<?php echo $row['cliCorreo']?>" disabled readonly>
-            </div>
-            <div class="col-sm-6">
-            <label id="ClienteTelefono" for="phone" class="form-label">Telefono</label>
-            <input name="ClienteTelefono" type="number" class="form-control"
-                value="<?php echo $row['cliTelefono']?>" disabled readonly>
-            </div>
-            <div class="row g-3">
-              <div class="col-md-6">
-              <h4>Proyectos generados</h4>
-                  <ul class="list-group" id="proyecto_cliente" >
-                  <?php
-                   include("../conexion.php");
-
-                   $pk_id_cliente = $_GET['pk_id_cliente'];
-
-                   $sql = $conectar->query("SELECT p.pk_id_proyecto, p.proNombre
-                   FROM ga_proyecto p
-                   INNER JOIN ga_cliente c ON p.fk_id_cliente = c.pk_id_cliente
-                   WHERE p.fk_id_cliente = $pk_id_cliente 
-                   ORDER BY p.proNombre ASC");
-
-                   while ($resultado = $sql->fetch_assoc()) {
-                   echo '<div class="form-check">
-                    <label class="form-check-label" for="checkbox' . $resultado['pk_id_proyecto'] . '" disabled readonly>'. $resultado['proNombre'] . '</label>
-                    </div>';
-                   }
-                   ?>
-                  </ul>
-              </div>
-            </div>
-            <div class="py-4">
-              <a class="btn btn-lg float-end custom-btn" style="font-size: 15px;"
-              href="../AdministradorCitas.php">Volver</a>
-            </div>
+      <div class="col-sm-6">
+      <label id="nombrePaciente" for="name" class="form-label">Nombre</label>
+      <input name="nombrePaciente" type="text" class="form-control" 
+       value="<?php echo $row['nombrePaciente']?>" disabled readonly>
       </div>
+      <div class="col-sm-6">
+      <label id="apellidoPaciente" for="name" class="form-label">Apellido</label>
+      <input name="apellidoPaciente" type="text" class="form-control" 
+       value="<?php echo $row['apellidoPaciente']?>" disabled readonly>
+      </div>
+      <div class="col-sm-6">
+      <label id="fechaNacimientoPaciente" for="date" class="form-label">Fecha de Nacimiento</label>
+      <input name="fechaNacimientoPaciente" type="date" class="form-control" 
+       value="<?php echo $row['fechaNacimientoPaciente']?>" disabled readonly>
+      </div>
+      <div class="col-sm-6">
+      <label id="EdadPaciente" for="age" class="form-label">Edad</label>
+      <input name="EdadPaciente" type="number" class="form-control" 
+       value="<?php echo $row['edadPaciente']?>" disabled readonly>
+      </div>
+      <h6>Informacion Cita Medica</h6>
+      <div class="col-sm-6">
+      <label id="MotivoCita" for="text" class="form-label">Motivo de la Cita</label>
+      <input name="MotivoCita" type="text" class="form-control" 
+       value="<?php echo $row['motivoCita']?>" disabled readonly>
+      </div>
+      <?php
+      require("../../../../Config/DataBase.php");
+
+      $idCita = $_GET['idCita'];
+
+      $sql = "SELECT p.nombreProducto, cp.cantidad_producto
+              FROM producto p
+              INNER JOIN cita_productos cp ON p.idProducto = cp.fk_id_producto
+              WHERE cp.fk_id_cita = $idCita";
+
+      $resultado = $conexion->query($sql);
+
+      if ($resultado->num_rows > 0) {
+          $row = $resultado->fetch_assoc();
+          $nombreProducto = $row['nombreProducto'];
+          $cantidadProducto = $row['cantidad_producto'];
+
+      ?>
+    <div class="col-sm-3">
+        <label id="Producto" class="form-label">Nombre del Producto</label>
+        <input name="Producto" type="text" class="form-control" value="<?php echo $nombreProducto ?>" disabled readonly>
     </div>
+    <div class="col-sm-3">
+        <label id="CantidadProducto" class="form-label">Cantidad</label>
+        <input name="CantidadProducto" type="number" class="form-control" value="<?php echo $cantidadProducto ?>" disabled readonly>
+    </div>
+    <?php
+    } else {
+    echo "No se encontraron productos para esta cita.";
+    }
+    ?>
+    </div>
+      <div class="py-4">
+        <a class="btn btn-secondary float-end custom-btn" style="font-size: 15px;"
+        href="../AdministradorCitas.php">Volver</a>
+      </div>
+      </div>
+      </div>
+      </div>
       </div>
     </div>
   </div>

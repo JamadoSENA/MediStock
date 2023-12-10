@@ -120,7 +120,7 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/DetallesUsuarioPerson.php?php echo $resultado['idUsuario']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a href="Forms/DetallesUsuarioPerson.php?idUsuario=<?php echo $resultado['idUsuario']?>" class="dropdown-item">Detalles</a></li>
                 </ul>
               </td>
             </tr>

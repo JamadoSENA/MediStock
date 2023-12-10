@@ -103,7 +103,7 @@ if( $validar == null || $validar = ''){
             
             require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT documentoPaciente, CONCAT(nombrePaciente, ' ', apellidoPaciente) AS nombreCompletoPaciente,
+            $sql = $conexion->query("SELECT idCita, documentoPaciente, CONCAT(nombrePaciente, ' ', apellidoPaciente) AS nombreCompletoPaciente,
             CONCAT(nombreUsuario, ' ', apellidoUsuario) AS nombre_completo, tipoCita, fechaCita
             from cita_medica
             INNER JOIN usuario ON cita_medica.fk_id_usuario = usuario.idUsuario 
@@ -127,7 +127,7 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/DetallesCitasPerson.php?php echo $resultado['idCita']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a href="Forms/DetallesCitasPerson.php?idCita=<?php echo $resultado['idCita']?>" class="dropdown-item">Detalles</a></li>
                 </ul>
               </td>
             </tr>
