@@ -129,8 +129,8 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/ActualizarUsuarioAdmin.php?php echo $resultado['idUsuario']?>" class="dropdown-item">Actualizar</a></li>
-                  <li><a href="Forms/DetallesUsuarioAdmin.php?php echo $resultado['idUsuario']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a href="Forms/ActualizarUsuarioAdmin.php?idUsuario=<?php echo $resultado['idUsuario']?>" class="dropdown-item">Actualizar</a></li>
+                  <li><a href="Forms/DetallesUsuarioAdmin.php?idUsuario=<?php echo $resultado['idUsuario']?>" class="dropdown-item">Detalles</a></li>
                   <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarUsuario.php?Id=<?php echo $resultado['idUsuario']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
                         height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path

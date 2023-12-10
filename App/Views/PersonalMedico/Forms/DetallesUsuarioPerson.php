@@ -92,7 +92,7 @@ if( $validar == null || $validar = ''){
             $row = $resultado->fetch_assoc();
             
       ?>
-      <input type="hidden" class="form-control" name="idProducto" value="<?php echo $row['idProducto'] ?>">
+      <input type="hidden" class="form-control" name="idUsuario" value="<?php echo $row['idUsuario'] ?>">
       <div class="row g-3">
       <div class="col-sm-6">
       <label id="documentoUsuario" for="document" class="form-label">Documento</label>
