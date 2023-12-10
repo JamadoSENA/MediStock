@@ -25,7 +25,7 @@ if( $validar == null || $validar = ''){
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../Recursos/css/Personal.css">
+  <link rel="stylesheet" href="../../Recursos/css/Administrador.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 </head>
 
@@ -52,24 +52,30 @@ if( $validar == null || $validar = ''){
     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="0 0 24 24">
     </svg>
-    <span class="fs-4">Personal Medico</span>
+    <span class="fs-4">Administrador</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <a href="PersonalMedicoUsuarios.php" class="nav-link text-dark">
+        <a href="AdministradorUsuarios.php" class="nav-link text-dark">
           <svg class="bi bi-people me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Usuarios
         </a>
       </li>
       <li>
-        <a href="PersonalMedicoProductos.php" class="nav-link text-dark">
+        <a href="AdministradorProveedores.php" class="nav-link text-dark">
           <svg class="bi bi-card-checklist me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          Proveedores
+        </a>
+      </li>
+      <li>
+        <a href="AdministradorProductos.php" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Productos
         </a>
       </li>
       <li>
-        <a href="PersonalMedicoCitas.php" class="nav-link text-dark">
+        <a href="AdministradorCitas.php" class="nav-link text-dark">
           <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Citas Medicas
         </a>
@@ -80,8 +86,6 @@ if( $validar == null || $validar = ''){
       <br>
       <div>
         <h4 class="mb-3">Dashboard de Citas Medicas
-        <a href="Forms/CrearCitaPerson.php"><button class="btn btn-lg float-end custom-btn btn-success" type="submit"
-            style="font-size: 15px; margin-right: 5px;">+ Registrar cita</button></a>
         </h4>
       </div>
       <br>
@@ -127,7 +131,7 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/DetallesCitasPerson.php?php echo $resultado['idCita']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a href="Forms/DetallesCitaAdmin.php?php echo $resultado['idCita']?>" class="dropdown-item">Detalles</a></li>
                 </ul>
               </td>
             </tr>
@@ -152,7 +156,7 @@ if( $validar == null || $validar = ''){
     crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-<script src="../../Recursos/js/Personal.js"></script>
+<script src="../../Recursos/js/Administrador.js"></script>
 <script type="text/javascript">
     let table = new DataTable('#tablaCitas', {
     //Para cambiar el lenguaje a español

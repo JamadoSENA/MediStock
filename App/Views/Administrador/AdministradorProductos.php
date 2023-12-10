@@ -74,6 +74,12 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
+      <li>
+        <a href="AdministradorCitas.php" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          Citas Medicas
+        </a>
+      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">
@@ -115,7 +121,7 @@ if( $validar == null || $validar = ''){
               <td scope="row"><?php echo $resultado ['fechaCaducidadProducto']?></td>
               <td scope="row"><?php echo $resultado ['cantidadProducto']?></td>
               <td scope="row"><?php echo $resultado ['estadoProducto']?></td>
-              <td scope="row"><?php echo $resultado ['fk_id_proveedor']?></td>
+              <td scope="row"><?php echo $resultado ['nombreProveedor']?></td>
               <td scope="row">
                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
