@@ -6,40 +6,49 @@ require '../../../../Config/DataBase.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     // Obtener datos del formulario
-    $nombre = $_POST["ProyectoNombre"];
-    $municipio = $_POST["ProyectoMunicipio"];
-    $direccion = $_POST["ProyectoDireccion"];
-    $descripcion = $_POST["ProyectoDescripcion"];
-    $cliente = $_POST["ProyectoCliente"];
+    $documento = $_POST["documentoPaciente"];
+    $nombre = $_POST["nombrePaciente"];
+    $apellido = $_POST["apellidoPaciente"];
+    $fechaNacimiento = $_POST["fechaNacimientoPaciente"];
+    $edad = $_POST["edadPaciente"];
+    $motivo = $_POST["motivoCita"];
+    $tipo = $_POST["tipoCita"];
+    $notas = $_POST["notasMedico"];
+    $medico = $_POST["medico"];    
 
-    $insert_cita = $conectar->prepare("INSERT INTO ga_proyecto (proNombre, proMunicipio, proDireccion, proDescripcion, fk_id_cliente) 
-    VALUES (?, ?, ?, ?, ?)");
-    $insert_proyecto->bind_param("ssssi", $nombre, $municipio, $direccion, $descripcion, $cliente);
+    $insert_cita = $conexion->prepare("CALL CrearCitaMedica (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $insert_cita->bind_param("isssisssi", $documento, $nombre, $apellido, 
+    $fechaNacimiento, $edad, $motivo, $tipo, $notas, $medico);
 
-    // Después de insertar el proyecto principal correctamente
-if ($insert_proyecto->execute()) {
-    $id_proyecto = $insert_proyecto->insert_id;
+    // Después de insertar la cita correctamente
+    if ($insert_cita->execute()) {
+        $id_cita = $insert_cita->insert_id;
+    
+        if (isset($_POST["producto"]) && isset($_POST["cantidadProducto"])) {
+            $cantidad = $_POST["cantidadProducto"];
+            $producto = $_POST["producto"];
+            
+            if (isset($cantidad) && is_array($producto) && count($cantidad) === count($producto)) {
+                foreach ($producto as $index => $id_producto) {
+                    $cantidad_producto = $cantidad[$index];
+                    $insert_intermedia = $conexion->prepare("CALL AñadirProductosCita (?, ?, ?)");
+                    $insert_intermedia->bind_param("iii", $cantidad_producto, $id_cita, $id_producto);
+                    $insert_intermedia->execute();
+                }
+            } else {
+                echo "2"; // Error
+            }
+            header("location:../PersonalMedicoCitas.php"); // Éxito al agregar
 
-    // Insertar usuarios seleccionados en la tabla intermedia
-    if (isset($_POST["usuarios_proyecto"]) && is_array($_POST["usuarios_proyecto"])) {
-        $usuarios_asignados = $_POST["usuarios_proyecto"];
-        foreach ($usuarios_asignados as $id_usuario) {
-            $insert_intermedia = $conectar->prepare("INSERT INTO usuarios_proyectos (fk_id_usuario, fk_id_proyecto) VALUES (?, ?)");
-            $insert_intermedia->bind_param("ii", $id_usuario, $id_proyecto);
-            $insert_intermedia->execute();
-        }
-    }
+        } else {
 
-    echo "1"; // Éxito al agregar el proyecto
-} else {
-    echo "2"; // Error al agregar el proyecto
+    echo "2"; // Error al agregar 
+
 }
 
-    $insert_proyecto->close();
-} else {
-    echo "Error: Datos de formulario incompletos.";
-}
+    $insert_cita->close();
+} }
 
-mysqli_close($conectar);
+mysqli_close($conexion);
 
 ?>

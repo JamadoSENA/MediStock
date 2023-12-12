@@ -79,90 +79,165 @@ if( $validar == null || $validar = ''){
   <div class="col-9 border-left custom-form">
       <br>
       <div>
-        <h4 class="mb-3">Detalles Cita Medica
+        <h4 class="mb-3">Registrar Cita Medica<a href="../PersonalMedicoCitas.php"><button class="btn btn-lg float-end custom-btn btn-secondary" type="submit"
+            style="font-size: 15px; margin-right: 5px;">Cancelar</button></a>
         </h4>
       </div>
       <div class="col-12 custom-form vh-80">
-      <?php
-            
-            include ('../../../../Config/DataBase.php');
-            
-            $sql = "SELECT * FROM cita_medica WHERE idCita=".$_GET['idCita'];
-            $resultado = $conexion->query($sql);
-            $row = $resultado->fetch_assoc();
-            
-      ?>
-      <input type="hidden" class="form-control" name="idCita" value="<?php echo $row['idCita'] ?>">
+      <form id="RegistroCitaMedica" class="needs-validation" method="post" 
+      action="../FormLogic/CrearCita.php" novalidate>
       <div class="row g-3">
-      <h6>Informacion Paciente</h6>
+      <h6>Registro Paciente</h6>
       <div class="col-sm-6">
       <label id="documentoPaciente" for="document" class="form-label">Documento</label>
       <input name="documentoPaciente" type="number" class="form-control" 
-       value="<?php echo $row['documentoPaciente']?>" disabled readonly>
+       value="" required>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3">
       <label id="nombrePaciente" for="name" class="form-label">Nombre</label>
       <input name="nombrePaciente" type="text" class="form-control" 
-       value="<?php echo $row['nombrePaciente']?>" disabled readonly>
+       value="" required>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3">
       <label id="apellidoPaciente" for="name" class="form-label">Apellido</label>
       <input name="apellidoPaciente" type="text" class="form-control" 
-       value="<?php echo $row['apellidoPaciente']?>" disabled readonly>
+       value="" required>
       </div>
-      <div class="col-sm-6">
-      <label id="fechaNacimientoPaciente" for="date" class="form-label">Fecha de Nacimiento</label>
-      <input name="fechaNacimientoPaciente" type="date" class="form-control" 
-       value="<?php echo $row['fechaNacimientoPaciente']?>" disabled readonly>
-      </div>
-      <div class="col-sm-6">
-      <label id="EdadPaciente" for="age" class="form-label">Edad</label>
-      <input name="EdadPaciente" type="number" class="form-control" 
-       value="<?php echo $row['edadPaciente']?>" disabled readonly>
-      </div>
+      <div class="col-6">
+            <label for="Nacimiento" class="form-label">Fecha de nacimiento</label>
+            <div class="input-group has-validation">
+              <input name="fechaNacimientoPaciente" type="date" class="form-control" id="FechaNacimiento"
+                placeholder="Fecha de nacimiento" required>
+              <div class="invalid-feedback">
+                Se requiere una fecha válida.
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="Edad" class="form-label">Edad</label>
+            <div class="input-group has-validation">
+              <input name="edadPaciente" type="number" class="form-control" id="Edad" readonly required>
+              <div class="invalid-feedback">
+                Se requiere una edad válida.
+              </div>
+            </div>
+          </div>
+          <script>
+            const inputFechaNacimiento = document.getElementById('FechaNacimiento');
+            const inputEdad = document.getElementById('Edad');
+
+            inputFechaNacimiento.addEventListener('input', function () {
+              const fechaNacimiento = new Date(this.value);
+              const fechaActual = new Date();
+
+              if (isNaN(fechaNacimiento.getTime())) {
+                // La fecha ingresada no es válida
+                this.setCustomValidity('Se requiere una fecha válida.');
+                this.parentElement.classList.add('was-validated');
+              } else if (fechaNacimiento > fechaActual) {
+                // La fecha ingresada es en el futuro
+                this.setCustomValidity('La fecha de nacimiento no puede ser en el futuro.');
+                this.parentElement.classList.add('was-validated');
+              } else {
+                // La fecha ingresada es válida
+                this.setCustomValidity('');
+                this.parentElement.classList.remove('was-validated');
+
+                // Calcular edad
+                const diff = fechaActual - fechaNacimiento;
+                const edad = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+                inputEdad.value = edad;
+              }
+            });
+
+            inputEdad.addEventListener('input', function () {
+              const edad = parseInt(this.value);
+              const fechaNacimiento = new Date(inputFechaNacimiento.value);
+              const fechaLimite = new Date(fechaNacimiento);
+              fechaLimite.setFullYear(fechaNacimiento.getFullYear() + edad);
+
+              const fechaActual = new Date();
+
+              if (isNaN(edad) || edad < 0) {
+                // La edad ingresada no es válida
+                this.setCustomValidity('Se requiere una edad válida.');
+                this.parentElement.classList.add('was-validated');
+              } else if (fechaLimite > fechaActual) {
+                // La edad ingresada resulta en una fecha de nacimiento en el futuro
+                this.setCustomValidity('La fecha de nacimiento resultante con esta edad sería en el futuro.');
+                this.parentElement.classList.add('was-validated');
+              } else {
+                // La edad ingresada es válida
+                this.setCustomValidity('');
+                this.parentElement.classList.remove('was-validated');
+              }
+            });
+            </script>
       <h6>Informacion Cita Medica</h6>
       <div class="col-sm-6">
-      <label id="MotivoCita" for="text" class="form-label">Motivo de la Cita</label>
-      <input name="MotivoCita" type="text" class="form-control" 
-       value="<?php echo $row['motivoCita']?>" disabled readonly>
+      <label id="motivoCita" for="text" class="form-label">Motivo de la Cita</label>
+      <input name="motivoCita" type="text" class="form-control" 
+       value="" required>
       </div>
-      <?php
-      require("../../../../Config/DataBase.php");
+      <div class="col-sm-6">
+      <label id="tipoCita" for="text" class="form-label">Tipo de la Cita</label>
+      <select name="tipoCita" class="form-select" id="Tipo" required>
+          <option value="">Elegir...</option>
+          <option value="">Presencial...</option>
+          <option value="">Virtual...</option>
+      </select>
+      </div>
+      <div class="col-sm-6">
+      <label id="notasMedico" for="text" class="form-label">Notas del Medico</label>
+      <input name="notasMedico" type="text" class="form-control" 
+       value="" required>
+      </div>
+      <div class="col-sm-3">
+        <label for="producto" class="form-label">Implemento utilizado</label>
+        <select name="producto" class="form-select" id="producto" required>
+          <option value="">Elegir...</option>
+          <?php
+          include ("../../../../Config/DataBase.php");
 
-      $idCita = $_GET['idCita'];
+          $sql = $conexion->query("SELECT * FROM producto ORDER BY nombreProducto ASC");
+          while ($resultado = $sql->fetch_assoc()) {
 
-      $sql = "SELECT p.nombreProducto, cp.cantidad_producto
-              FROM producto p
-              INNER JOIN cita_productos cp ON p.idProducto = cp.fk_id_producto
-              WHERE cp.fk_id_cita = $idCita";
+          echo "<option value='".$resultado['idProducto']."'>".$resultado
+          ['nombreProducto']."</option>";
 
-      $resultado = $conexion->query($sql);
-
-      if ($resultado->num_rows > 0) {
-          $row = $resultado->fetch_assoc();
-          $nombreProducto = $row['nombreProducto'];
-          $cantidadProducto = $row['cantidad_producto'];
-
-      ?>
+          }
+          ?>
+        </select>
+      </div>
     <div class="col-sm-3">
-        <label id="Producto" class="form-label">Nombre del Producto</label>
-        <input name="Producto" type="text" class="form-control" value="<?php echo $nombreProducto ?>" disabled readonly>
+        <label id="cantidadProducto" class="form-label">Cantidad</label>
+        <input name="cantidadProducto" type="number" class="form-control" value="" required>
     </div>
     <div class="col-sm-3">
-        <label id="CantidadProducto" class="form-label">Cantidad</label>
-        <input name="CantidadProducto" type="number" class="form-control" value="<?php echo $cantidadProducto ?>" disabled readonly>
-    </div>
-    <?php
-    } else {
-    echo "No se encontraron productos para esta cita.";
-    }
-    ?>
+        <label for="medico" class="form-label">Medico encargado</label>
+        <select name="medico" class="form-select" id="medico" required>
+          <option value="">Elegir...</option>
+          <?php
+          include ("../../../../Config/DataBase.php");
+
+          $sql = $conexion->query("SELECT idUsuario, CONCAT(nombreUsuario, ' ', apellidoUsuario) 
+          AS nombre_completo FROM usuario ORDER BY nombre_completo ASC");
+          while ($resultado = $sql->fetch_assoc()) {
+
+          echo "<option value='".$resultado['idUsuario']."'>".$resultado
+          ['nombre_completo']."</option>";
+
+          }
+          ?>
+        </select>
+      </div>
     </div>
       <div class="py-4">
-        <a class="btn btn-secondary float-end custom-btn" style="font-size: 15px;"
-        href="../PersonalMedicoCitas.php">Volver</a>
+        <button class="btn btn-success float-end custom-btn" style="font-size: 15px;"
+        type="submit">Registrar Cita</button>
       </div>
       </div>
+      </form>
       </div>
       </div>
       </div>
