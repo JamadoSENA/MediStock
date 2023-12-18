@@ -88,6 +88,8 @@ if( $validar == null || $validar = ''){
         <h4 class="mb-3">Dashboard de Productos
         <a href="Forms/CrearProductoAdmin.php"><button class="btn btn-lg float-end custom-btn btn-success" type="submit"
             style="font-size: 15px; margin-right: 5px;">+ Registrar producto</button></a>
+        <a href="ImprimirProductos.php"><button class="btn btn-lg float-end custom-btn btn-secondary" type="submit"
+            style="font-size: 15px; margin-right: 5px;">- Generar reporte</button></a>
         </h4>
       </div>
       <br>
