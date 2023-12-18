@@ -165,25 +165,42 @@ if( $validar == null || $validar = ''){
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 <script src="../../Recursos/js/Administrador.js"></script>
 <script type="text/javascript">
-    let table = new DataTable('#tablaProveedores', {
-    //Para cambiar el lenguaje a español
-    "language": {
-        "lengthMenu": "Mostrar _MENU_ registros",
+  $(document).ready(function() {
+    var tabla = $('#tablaProveedores').DataTable({
+      "language": {
+        "search": "Buscar:",
+        "lengthMenu": "Mostrar _MENU_ entradas por página",
         "zeroRecords": "No se encontraron resultados",
-        "info": "Mostrando del _START_ al _END_ de _TOTAL_ registros",
-        "infoEmpty": "Mostrando del 0 al 0 de 0 registros",
-        "infoFiltered": "(de un total de _MAX_ registros)",
-        "sSearch": "Buscar:",
-        "oPaginate": {
-            "sFirst": "Primero",
-            "sLast": "Último",
-            "sNext": "Siguiente",
-            "sPrevious": "Anterior"
-        },
-        "sProcessing": "Procesando..."
-    }
-   })
-  </script>
+        "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+        "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+        "infoFiltered": "(filtrado de _MAX_ entradas totales)",
+        "paginate": {
+          "first": "Primero",
+          "last": "Último",
+          "next": "Siguiente",
+          "previous": "Anterior"
+        }
+      }
+    });
+
+    $('#tablaProveedores thead th').each(function() {
+      var titulo = $(this).text();
+      $(this).html('<input type="text" placeholder="Buscar ' + titulo + '" />');
+    });
+
+    tabla.columns().every(function() {
+      var that = this;
+
+      $('input', this.header()).on('keyup change', function() {
+        if (that.search() !== this.value) {
+          that
+            .search(this.value)
+            .draw();
+        }
+      });
+    });
+  });
+</script>
 
 </body>
 
