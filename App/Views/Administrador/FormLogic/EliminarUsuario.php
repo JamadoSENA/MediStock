@@ -7,7 +7,7 @@ require '../../../../Config/DataBase.php';
 
     $query = mysqli_query($conexion, $sql);
     if ($query === TRUE) {
-        header("location:../AdministradorUsuario.php");
+        header("location:../AdministradorUsuarios.php");
       }                           
     
 
