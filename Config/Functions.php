@@ -30,7 +30,7 @@ function acceso_user() {
 
         header('Location: ../App/Views/Administrador/AdministradorUsuarios.php');
 
-    }else if($filas['fk_id_rol'] == 2){ //Personal
+    }else if($filas['fk_id_rol'] == 2){ //PersonalMedico
 
         header('Location: ../App/Views/PersonalMedico/PersonalMedicoUsuarios.php');
 
