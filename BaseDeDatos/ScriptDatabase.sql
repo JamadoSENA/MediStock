@@ -1,65 +1,106 @@
-create database MediStock;
-use MediStock;
-create table rol(
-idRol int (10) primary key not null,
-nombreRol varchar (20) not null);
-create table usuario (
-idUsuario int (10) primary key not null,
-nombreUsuario varchar (100) not null,
-apellidoUsuario varchar (100) not null,
-fechaNacimientoUsuario DATE not null,
-edadUsuario int (10) not null,
-departamentoUsuario varchar (50) not null,
-municipioUsuario varchar (50) not null,
-direccionUsuario varchar (100) not null,
-profesionUsuario varchar (50) not null,
-telefonoUsuario varchar (10) not null,
-correoUsuario varchar (60) not null,
-contraseniaUsuario varchar (45) not null,
-fk_id_rol int (10) not null,
-foreign key (fk_id_rol) references rol (idRol)
-ON DELETE CASCADE ON UPDATE CASCADE);
-create table proveedor (
-idProveedor int (10) primary key not null,
-nombreProveedor varchar (100) not null,
-departamentoProveedor varchar (50) not null,
-municipioProveedor varchar (50) not null,
-direccionProveedor varchar (100) not null,
-telefonoProveedor varchar (10) not null,
-correoProveedor varchar (60) not null);
-create table producto (
-idProducto int (10) primary key auto_increment not null,
-nombreProducto varchar (100) not null,
-descripcionProducto varchar (500) not null,
-indicacionesProducto varchar (500) not null,
-fechaCaducidadProducto DATE null,
-cantidadProducto int (20) not null,
-estadoProducto varchar (20) not null,
-fechaRegistroProducto DATETIME DEFAULT CURRENT_TIMESTAMP,
-fk_id_proveedor int (10) not null,
-foreign key (fk_id_proveedor) references proveedor (idProveedor)
-ON DELETE CASCADE ON UPDATE CASCADE);
-create table cita_medica (
-idCita int (10) primary key auto_increment,
-fechaCita DATETIME DEFAULT CURRENT_TIMESTAMP,
-documentoPaciente int (10) not null,
-nombrePaciente varchar (100) not null,
-apellidoPaciente varchar (100) not null,
-fechaNacimientoPaciente DATE not null,
-edadPaciente int (10) not null,
-motivoCita varchar (5000) not null,
-tipoCita varchar (100) not null,
-notasMedico varchar (5000) not null,
-fk_id_usuario int (10) NOT NULL,
-FOREIGN KEY (fk_id_usuario) REFERENCES usuario(idUsuario) 
-ON DELETE CASCADE ON UPDATE CASCADE);
-create table cita_productos (
-cantidad_producto int (10) not null,
-fk_id_cita int (10) not null,
-fk_id_producto int (10) not null,
-FOREIGN KEY (fk_id_cita) REFERENCES cita_medica (idCita),
-FOREIGN KEY (fk_id_producto) REFERENCES producto (idProducto) 
-ON DELETE CASCADE ON UPDATE CASCADE);
+create database medistock;
 
-Insert into rol Values (1, "Administrador");
-Insert into rol Values (2, "Medico");
+use medistock;
+
+-- Creación de la tabla roles
+CREATE TABLE roles (
+    idRole INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL
+);
+
+-- Creación de la tabla users
+CREATE TABLE users (
+    idUser INT PRIMARY KEY AUTO_INCREMENT,
+    documentType VARCHAR(20) NOT NULL,
+    name VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    birthdate Varchar (10) NOT NULL,
+    age INT NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    phoneNumber VARCHAR(20) NOT NULL,
+    profession VARCHAR(50) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    fkIdRole INT NOT NULL,
+    FOREIGN KEY (fkIdRole) REFERENCES roles(idRole) ON DELETE CASCADE
+);
+
+-- Creación de la tabla schedulings
+CREATE TABLE schedulings (
+    idScheduling INT PRIMARY KEY AUTO_INCREMENT,
+    reason VARCHAR(100) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    fkIdPatient INT NOT NULL,
+	fkIdDoctor INT NOT NULL,
+    FOREIGN KEY (fkIdPatient) REFERENCES users(idUser) ON DELETE CASCADE,
+	FOREIGN KEY (fkIdDoctor) REFERENCES users(idUser) ON DELETE CASCADE
+);
+
+-- Creación de la tabla appoinments
+CREATE TABLE appoinments (
+    idAppointment INT PRIMARY KEY AUTO_INCREMENT,
+    dateHour VARCHAR (20) NOT NULL,
+    fkIdScheduling INT NOT NULL,
+    FOREIGN KEY (fkIdScheduling) REFERENCES schedulings(idScheduling) ON DELETE CASCADE
+    );
+
+-- Creación de la tabla diagnosis
+CREATE TABLE diagnosis (
+    idDiagnosis INT PRIMARY KEY AUTO_INCREMENT,
+    description VARCHAR (500) NOT NULL,
+    fkIdAppointment INT NOT NULL,
+    FOREIGN KEY (fkIdAppointment) REFERENCES appoinments(idAppointment) ON DELETE CASCADE
+);
+
+-- Creación de la tabla prescriptions
+CREATE TABLE prescriptions (
+    idPrescription INT PRIMARY KEY AUTO_INCREMENT,
+    medicines VARCHAR (500) NOT NULL,
+    fkIdDiagnosis INT NOT NULL,
+    FOREIGN KEY (fkIdDiagnosis) REFERENCES diagnosis(idDiagnosis) ON DELETE CASCADE
+);
+
+-- Creación de la tabla categories
+CREATE TABLE categories (
+    idCategory INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL
+);
+
+-- Creación de la tabla medicines
+CREATE TABLE medicines (
+    idMedicine INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    format VARCHAR(50) NOT NULL,
+    stock INT NOT NULL,
+    expirationDate VARCHAR (10) NOT NULL,
+    fkIdCategory INT NOT NULL,
+    FOREIGN KEY (fkIdCategory) REFERENCES categories(idCategory) ON DELETE CASCADE
+);
+
+-- Creación de la tabla medicinesPrescriptions
+CREATE TABLE medicinesPrescriptions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    amount INT NOT NULL,
+    fkIdMedicine INT NOT NULL,
+    fkIdPrescription INT NOT NULL,
+    FOREIGN KEY (fkIdMedicine) REFERENCES medicines(idMedicine) ON DELETE CASCADE,
+    FOREIGN KEY (fkIdPrescription) REFERENCES prescriptions(idPrescription) ON DELETE CASCADE
+);
+
+-- Creación de la tabla suppliers
+CREATE TABLE suppliers (
+    idSupplier INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    phoneNumber VARCHAR(20) NOT NULL
+);
+
+-- Creación de la tabla medicinesSuppliers
+CREATE TABLE medicinesSuppliers (
+    fkIdMedicine INT NOT NULL,
+    fkIdSupplier INT NOT NULL,
+    FOREIGN KEY (fkIdMedicine) REFERENCES medicines(idMedicine) ON DELETE CASCADE,
+    FOREIGN KEY (fkIdSupplier) REFERENCES suppliers(idSupplier) ON DELETE CASCADE
+);
