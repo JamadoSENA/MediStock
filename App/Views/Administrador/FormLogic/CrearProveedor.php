@@ -7,15 +7,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Obtener datos del formulario
     $nit = $_POST["NIT"];
     $nombre = $_POST["Nombre"];
-    $departamento = $_POST["Departamento"];
-    $municipio = $_POST["Municipio"];
     $direccion = $_POST["Direccion"];
-    $telefono = $_POST["Telefono"];
     $correo = $_POST["Correo"];
+    $telefono = $_POST["Telefono"];
+    $producto = $_POST["Producto"];
 
-    $insert_proveedor = $conexion->prepare("CALL CrearProveedor(?, ?, ?, ?, ?, ?, ?)");
-    $insert_proveedor->bind_param("issssss", $nit, $nombre, $departamento, $municipio,
-    $direccion, $telefono, $correo);
+    $insert_proveedor = $conexion->prepare("CALL CrearProveedor(?, ?, ?, ?, ?, ?)");
+    $insert_proveedor->bind_param("issssi", $nit, $nombre, $direccion, $telefono, $correo, $producto);
 
         // Ejecutar la consulta de inserción
         if ($insert_proveedor->execute()) {

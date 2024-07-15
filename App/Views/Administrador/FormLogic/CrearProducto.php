@@ -6,16 +6,15 @@ require '../../../../Config/DataBase.php';
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Obtener datos del formulario
     $nombre = $_POST["Nombre"];
-    $descripcion = $_POST["Descripcion"];
-    $indicaciones = $_POST["Indicaciones"];
-    $fechaCaducidad = $_POST["FechaCaducidad"];
+    $formato = $_POST["Formato"];
     $cantidad = $_POST["Cantidad"];
     $estado = $_POST["Estado"];
+    $fechaCaducidad = $_POST["FechaCaducidad"];
     $proveedor = $_POST["Proveedor"];
 
-    $insert_producto = $conexion->prepare("CALL CrearProducto(?, ?, ?, ?, ?, ?, ?)");
-    $insert_producto->bind_param("ssssisi", $nombre, $descripcion, $indicaciones, $fechaCaducidad,
-    $cantidad, $estado, $proveedor);
+    $insert_producto = $conexion->prepare("CALL CrearProducto(?, ?, ?, ?, ?, ?)");
+    $insert_producto->bind_param("sssssi", $nombre, $formato, $cantidad, $estado,
+    $fechaCaducidad, $proveedor);
 
         // Ejecutar la consulta de inserción
         if ($insert_producto->execute()) {
