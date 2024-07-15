@@ -1,3 +1,4 @@
+Se usó un 70% del almacenamiento … Si te quedas sin almacenamiento, no podrás crear, editar ni subir archivos.
 create database medistock;
 
 use medistock;
@@ -12,7 +13,7 @@ CREATE TABLE roles (
 CREATE TABLE users (
     idUser INT PRIMARY KEY AUTO_INCREMENT,
     documentType VARCHAR(20) NOT NULL,
-    name VARCHAR(50) NOT NULL,
+    nameU VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
     birthdate Varchar (10) NOT NULL,
     age INT NOT NULL,
@@ -26,6 +27,21 @@ CREATE TABLE users (
     FOREIGN KEY (fkIdRole) REFERENCES roles(idRole) ON DELETE CASCADE
 );
 
+-- Creación de la tabla patients
+CREATE TABLE patients (
+    idPatient INT PRIMARY KEY AUTO_INCREMENT,
+    documentType VARCHAR(20) NOT NULL,
+    nameU VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    birthdate Varchar (10) NOT NULL,
+    age INT NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    phoneNumber VARCHAR(20) NOT NULL,
+    profession VARCHAR(50) NOT NULL,
+    address VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL
+);
+
 -- Creación de la tabla schedulings
 CREATE TABLE schedulings (
     idScheduling INT PRIMARY KEY AUTO_INCREMENT,
@@ -33,49 +49,29 @@ CREATE TABLE schedulings (
     state VARCHAR(50) NOT NULL,
     fkIdPatient INT NOT NULL,
 	fkIdDoctor INT NOT NULL,
-    FOREIGN KEY (fkIdPatient) REFERENCES users(idUser) ON DELETE CASCADE,
+    FOREIGN KEY (fkIdPatient) REFERENCES patients(idPatient) ON DELETE CASCADE,
 	FOREIGN KEY (fkIdDoctor) REFERENCES users(idUser) ON DELETE CASCADE
-);
-
--- Creación de la tabla appoinments
-CREATE TABLE appoinments (
-    idAppointment INT PRIMARY KEY AUTO_INCREMENT,
-    dateHour VARCHAR (20) NOT NULL,
-    fkIdScheduling INT NOT NULL,
-    FOREIGN KEY (fkIdScheduling) REFERENCES schedulings(idScheduling) ON DELETE CASCADE
-    );
-
--- Creación de la tabla diagnosis
-CREATE TABLE diagnosis (
-    idDiagnosis INT PRIMARY KEY AUTO_INCREMENT,
-    description VARCHAR (500) NOT NULL,
-    fkIdAppointment INT NOT NULL,
-    FOREIGN KEY (fkIdAppointment) REFERENCES appoinments(idAppointment) ON DELETE CASCADE
 );
 
 -- Creación de la tabla prescriptions
 CREATE TABLE prescriptions (
     idPrescription INT PRIMARY KEY AUTO_INCREMENT,
+    dateHour VARCHAR (20) NOT NULL,
+    descriptionP VARCHAR (500) NOT NULL,
     medicines VARCHAR (500) NOT NULL,
-    fkIdDiagnosis INT NOT NULL,
-    FOREIGN KEY (fkIdDiagnosis) REFERENCES diagnosis(idDiagnosis) ON DELETE CASCADE
-);
-
--- Creación de la tabla categories
-CREATE TABLE categories (
-    idCategory INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL
+    fkIdScheduling INT NOT NULL,
+    FOREIGN KEY (fkIdScheduling) REFERENCES schedulings(idScheduling) ON DELETE CASCADE
 );
 
 -- Creación de la tabla medicines
 CREATE TABLE medicines (
     idMedicine INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
-    format VARCHAR(50) NOT NULL,
+    nameM VARCHAR(100) NOT NULL,
+    formatM VARCHAR(50) NOT NULL,
     stock INT NOT NULL,
-    expirationDate VARCHAR (10) NOT NULL,
-    fkIdCategory INT NOT NULL,
-    FOREIGN KEY (fkIdCategory) REFERENCES categories(idCategory) ON DELETE CASCADE
+    stateM VARCHAR(20) NOT NULL,
+    expirationDate VARCHAR(10) NOT NULL,
+    category VARCHAR(20) NOT NULL,
 );
 
 -- Creación de la tabla medicinesPrescriptions
@@ -91,7 +87,7 @@ CREATE TABLE medicinesPrescriptions (
 -- Creación de la tabla suppliers
 CREATE TABLE suppliers (
     idSupplier INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    nameSU VARCHAR(100) NOT NULL,
     address VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     phoneNumber VARCHAR(20) NOT NULL

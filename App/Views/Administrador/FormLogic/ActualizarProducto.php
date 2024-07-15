@@ -6,8 +6,8 @@ require '../../../../Config/DataBase.php';
     $cantidad = $_POST['cantidad'];
     $estado = $_POST['estado'];
 
-    $sql = "UPDATE medicines SET   stock='".$cantidad."',
-                                  state='".$estado."'
+    $sql = "UPDATE medicines SET  stock='".$cantidad."',
+                                  stateM='".$estado."'
                                   WHERE idMedicine = ".$id."";
 
     if ($resultado = $conexion->query($sql)) {
