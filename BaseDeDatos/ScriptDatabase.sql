@@ -1,4 +1,3 @@
-Se usó un 70% del almacenamiento … Si te quedas sin almacenamiento, no podrás crear, editar ni subir archivos.
 create database medistock;
 
 use medistock;
@@ -11,7 +10,7 @@ CREATE TABLE roles (
 
 -- Creación de la tabla users
 CREATE TABLE users (
-    idUser INT PRIMARY KEY AUTO_INCREMENT,
+    idUser INT PRIMARY KEY,
     documentType VARCHAR(20) NOT NULL,
     nameU VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
@@ -20,25 +19,25 @@ CREATE TABLE users (
     gender VARCHAR(10) NOT NULL,
     phoneNumber VARCHAR(20) NOT NULL,
     profession VARCHAR(50) NOT NULL,
-    address VARCHAR(100) NOT NULL,
+    addressU VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
-    password VARCHAR(100) NOT NULL,
+    passwordU VARCHAR(100) NOT NULL,
     fkIdRole INT NOT NULL,
     FOREIGN KEY (fkIdRole) REFERENCES roles(idRole) ON DELETE CASCADE
 );
 
 -- Creación de la tabla patients
 CREATE TABLE patients (
-    idPatient INT PRIMARY KEY AUTO_INCREMENT,
+    idPatient INT PRIMARY KEY,
     documentType VARCHAR(20) NOT NULL,
-    nameU VARCHAR(50) NOT NULL,
+    nameP VARCHAR(50) NOT NULL,
     lastname VARCHAR(50) NOT NULL,
     birthdate Varchar (10) NOT NULL,
     age INT NOT NULL,
     gender VARCHAR(10) NOT NULL,
     phoneNumber VARCHAR(20) NOT NULL,
     profession VARCHAR(50) NOT NULL,
-    address VARCHAR(100) NOT NULL,
+    addressP VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL
 );
 
@@ -46,7 +45,9 @@ CREATE TABLE patients (
 CREATE TABLE schedulings (
     idScheduling INT PRIMARY KEY AUTO_INCREMENT,
     reason VARCHAR(100) NOT NULL,
-    state VARCHAR(50) NOT NULL,
+    stateS VARCHAR(50) NOT NULL,
+    dateS VARCHAR(10) NOT NULL,
+    hourSS VARCHAR(5) NOT NULL,
     fkIdPatient INT NOT NULL,
 	fkIdDoctor INT NOT NULL,
     FOREIGN KEY (fkIdPatient) REFERENCES patients(idPatient) ON DELETE CASCADE,
@@ -56,9 +57,10 @@ CREATE TABLE schedulings (
 -- Creación de la tabla prescriptions
 CREATE TABLE prescriptions (
     idPrescription INT PRIMARY KEY AUTO_INCREMENT,
-    dateHour VARCHAR (20) NOT NULL,
+    dateHour TIMESTAMP NOT NULL,
     descriptionP VARCHAR (500) NOT NULL,
     medicines VARCHAR (500) NOT NULL,
+    formUrl VARCHAR (500) NOT NULL,
     fkIdScheduling INT NOT NULL,
     FOREIGN KEY (fkIdScheduling) REFERENCES schedulings(idScheduling) ON DELETE CASCADE
 );
@@ -71,7 +73,7 @@ CREATE TABLE medicines (
     stock INT NOT NULL,
     stateM VARCHAR(20) NOT NULL,
     expirationDate VARCHAR(10) NOT NULL,
-    category VARCHAR(20) NOT NULL,
+    category VARCHAR(20) NOT NULL
 );
 
 -- Creación de la tabla medicinesPrescriptions
@@ -86,9 +88,9 @@ CREATE TABLE medicinesPrescriptions (
 
 -- Creación de la tabla suppliers
 CREATE TABLE suppliers (
-    idSupplier INT PRIMARY KEY AUTO_INCREMENT,
+    idSupplier INT PRIMARY KEY,
     nameSU VARCHAR(100) NOT NULL,
-    address VARCHAR(100) NOT NULL,
+    addressSU VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     phoneNumber VARCHAR(20) NOT NULL
 );
