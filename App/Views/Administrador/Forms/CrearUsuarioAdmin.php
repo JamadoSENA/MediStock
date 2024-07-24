@@ -133,9 +133,7 @@ if( $validar == null || $validar = ''){
             <label for="Edad" class="form-label">Edad</label>
             <div class="input-group has-validation">
               <input name="Edad" type="number" class="form-control" id="Edad" readonly required>
-              <div class="invalid-feedback">
-                Se requiere una edad válida.
-              </div>
+              
             </div>
           </div>
           <script>

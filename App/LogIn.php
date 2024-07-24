@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LogIn</title>
+<title>Log In</title>
 <link rel="shortcut icon" href="Recursos/img/LogoHeadMediStock.png" type="image/x-icon">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
 integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -43,21 +43,24 @@ height: 100%;
 
           <!-- Email input -->
           <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Correo Electronico</label>
             <input type="email" id="form3Example3" class="form-control form-control-lg"
-              placeholder="Ingresar un correo valido" name="correo" required/>
-            <label class="form-label" for="form3Example3">Correo Electronico</label>
+             name="correo" required/>
           </div>
 
           <!-- Password input -->
           <div class="form-outline mb-3">
+          <label class="form-label" for="form3Example4">Contraseña</label>
             <input type="password" id="form3Example4" class="form-control form-control-lg"
-              placeholder="Ingresar contraseña" name="contrasenia" required/>
+             name="contrasenia" required/>
             <input type="hidden" name="accion" value="acceso_user">
-            <label class="form-label" for="form3Example4">Contraseña</label>
           </div>
           <div class="text-center text-lg-start mt-4 pt-2">
             <button type="submit" class="btn btn-success btn-lg"
-              style="padding-left: 2.5rem; padding-right: 2.5rem;">Ingresar</button>
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Iniciar Sesion</button>
+              <a type="button" href="Register.php"
+              class="btn btn-secondary btn-lg" 
+              style="padding-left: 2.5rem; padding-right: 2.5rem;">Registrarse</a>
           </div>
 
         </form>
@@ -68,7 +71,7 @@ height: 100%;
     class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-secondary">
     <!-- Copyright -->
     <div class="text-white mb-3 mb-md-0">
-      MediStock © 2023. Todos los derechos reservados.
+      MediStock © 2024. Todos los derechos reservados.
     </div>
     <!-- Copyright -->
   </div>
