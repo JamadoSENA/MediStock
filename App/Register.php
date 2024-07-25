@@ -9,7 +9,7 @@
 
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-		<form role="form" id="RegistroUsuario" class="needs-validation" method="post" 
+		<form role="form" id="user_register" class="needs-validation" method="post" 
         action="RegisterUser.php" novalidate>
 			<h2>Registro de usuario</h2>
 			<hr class="colorgraph">
@@ -111,16 +111,20 @@
 						<input type="password" name="Contrasenia" id="password" class="form-control input-lg" placeholder="Contraseña" tabindex="12" required>
 					</div>
 				</div>
-				<div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="col-xs-12 col-sm-6 col-md-6">
 					<div class="form-group">
-						<input type="select" name="Rol" id="password_confirmation" class="form-control input-lg" placeholder="Rol" tabindex="13" required>
+						<input type="password" name="Contrasenia" id="password" class="form-control input-lg" placeholder="Confirmar contraseña" tabindex="13" required>
 					</div>
 				</div>
 			</div>
+                <div class="form-group">
+                    <label for="">Rol</label>
+                    <input type="select" name="Rol" id="password_confirmation" class="form-control input-lg" placeholder="Digite 1 para ser administrador o 2 para ser medico" tabindex="14" required>
+                </div>                                
             <hr>
 			<div class="row">
-				<div class="col-xs-12 col-md-6"><input type="submit" value="Registrar" class="btn btn-success btn-block btn-lg" tabindex="13" required></div>
-				<div class="col-xs-12 col-md-6"><a href="LogIn.php" class="btn btn-success btn-block btn-lg">Iniciar Sesion</a></div>
+				<div class="col-xs-12 col-md-6"><input type="submit" value="Registrarse" class="btn btn-primary btn-block btn-lg" tabindex="14" required></div>
+				<div class="col-xs-12 col-md-6"><a href="LogIn.php" class="btn btn-primary btn-block btn-lg">Iniciar Sesion</a></div>
 			</div>
 		</form>
 	</div>

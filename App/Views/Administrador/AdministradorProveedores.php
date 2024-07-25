@@ -74,12 +74,6 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
-      <li>
-        <a href="AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Citas Medicas
-        </a>
-      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">
@@ -88,6 +82,8 @@ if( $validar == null || $validar = ''){
         <h4 class="mb-3">Dashboard de Proveedores
         <a href="Forms/CrearProveedorAdmin.php"><button class="btn btn-lg float-end custom-btn btn-success" type="submit"
             style="font-size: 15px; margin-right: 5px;">+ Registrar proveedor</button></a>
+        <a href="ImprimirProveedores.php"><button class="btn btn-lg float-end custom-btn btn-secondary" type="submit"
+            style="font-size: 15px; margin-right: 5px;">- Generar reporte</button></a>
         </h4>
       </div>
       <br>
@@ -96,9 +92,9 @@ if( $validar == null || $validar = ''){
           <caption>Esta tabla muestra los proveedores existentes.</caption>
           <thead>
             <tr>
+              <th scope="col">NIT</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Departamento</th>
-              <th scope="col">Municipio</th>
+              <th scope="col">Direccion</th>
               <th scope="col">Telefono</th>
               <th scope="col">Correo</th>
               <th scope="col"></th>
@@ -109,17 +105,17 @@ if( $validar == null || $validar = ''){
             
             require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT * from proveedor");
+            $sql = $conexion->query("SELECT * from suppliers");
 
             while ($resultado = $sql->fetch_assoc()){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['nombreProveedor']?></td>
-              <td scope="row"><?php echo $resultado ['departamentoProveedor']?></td>
-              <td scope="row"><?php echo $resultado ['municipioProveedor']?></td>
-              <td scope="row"><?php echo $resultado ['telefonoProveedor']?></td>
-              <td scope="row"><?php echo $resultado ['correoProveedor']?></td>
+              <td scope="row"><?php echo $resultado ['idSupplier']?></td>
+              <td scope="row"><?php echo $resultado ['nameSU']?></td>
+              <td scope="row"><?php echo $resultado ['addressSU']?></td>
+              <td scope="row"><?php echo $resultado ['phoneNumber']?></td>
+              <td scope="row"><?php echo $resultado ['email']?></td>
               <td scope="row">
                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -129,9 +125,9 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/ActualizarProveedorAdmin.php?idProveedor=<?php echo $resultado['idProveedor']?>" class="dropdown-item">Actualizar</a></li>
-                  <li><a href="Forms/DetallesProveedorAdmin.php?idProveedor=<?php echo $resultado['idProveedor']?>" class="dropdown-item">Detalles</a></li>
-                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarProveedor.php?Id=<?php echo $resultado['idProveedor']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                  <li><a href="Forms/ActualizarProveedorAdmin.php?idSupplier=<?php echo $resultado['idSupplier']?>" class="dropdown-item">Actualizar</a></li>
+                  <li><a href="Forms/DetallesProveedorAdmin.php?idSupplier=<?php echo $resultado['idSupplier']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarProveedor.php?Id=<?php echo $resultado['idSupplier']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
                         height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path
                           d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />

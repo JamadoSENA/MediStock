@@ -108,14 +108,14 @@
     <div class="container-fluid">
       <div>
         <footer class="d-flex flex-wrap align-items-center py-3 my-4 border-top" style="padding: 20%;">
-          <p class="col-md-4 mb-0 text-muted">MediStock © 2023. Todos los derechos reservados.</p>
+          <p class="col-md-4 mb-0 text-muted">MediStock © 2024. Todos los derechos reservados.</p>
           <a
             class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
             <img src="Recursos/img/LogoColorVerde.png" alt="" width="50%" height="50%">
           </a>
           <ul class="nav col-md-4 justify-content-end">
             <p class="px-2 text-muted">SENA</p>
-            <p class="px-2 text-muted">Gestion de Inventario</p>
+            <p class="px-2 text-muted">Gestion de Inventario y Citas.</p>
           </ul>
         </footer>
       </div>

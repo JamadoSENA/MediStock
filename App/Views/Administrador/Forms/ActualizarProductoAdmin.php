@@ -74,12 +74,6 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
-      <li>
-        <a href="../AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Citas Medicas
-        </a>
-      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">
@@ -95,43 +89,38 @@ if( $validar == null || $validar = ''){
             
             include ('../../../../Config/DataBase.php');
             
-            $sql = "SELECT * FROM producto WHERE idProducto=".$_GET['idProducto'];
+            $sql = "SELECT * FROM medicines WHERE idMedicine=".$_GET['idMedicine'];
             $resultado = $conexion->query($sql);
             $row = $resultado->fetch_assoc();
             
       ?>
       <div class="row g-3">
       <form id="" class="needs-validation" method="post" action="../FormLogic/ActualizarProducto.php" novalidate>
-      <input type="hidden" class="form-control" name="idProducto" value="<?php echo $row['idProducto'] ?>">
+      <input type="hidden" class="form-control" name="idMedicine" value="<?php echo $row['idMedicine'] ?>">
       <div class="col-sm-6">
       <label id="nombreProducto" for="text" class="form-label">Nombre</label>
-      <input name="nombreProducto" type="text" class="form-control" 
-       value="<?php echo $row['nombreProducto']?>">
+      <input name="nombre" type="text" class="form-control" 
+       value="<?php echo $row['nameM']?>">
       </div>
       <div class="col-sm-6">
-      <label id="descripcionProducto" for="text" class="form-label">Descripcion</label>
-      <input name="descripcionProducto" type="text" class="form-control" 
-       value="<?php echo $row['descripcionProducto']?>">
+      <label id="descripcionProducto" for="text" class="form-label">Formato</label>
+      <input name="formato" type="text" class="form-control" 
+       value="<?php echo $row['formatM']?>">
       </div>
       <div class="col-sm-6">
-      <label id="indicacionesProducto" for="text" class="form-label">Indicaciones</label>
-      <input name="indicacionesProducto" type="text" class="form-control" 
-       value="<?php echo $row['indicacionesProducto']?>">
+      <label id="fechaCaducidadProducto" for="number" class="form-label">Cantidad</label>
+      <input name="cantidad" type="number" class="form-control" 
+       value="<?php echo $row['stock']?>">
       </div>
       <div class="col-sm-6">
-      <label id="fechaCaducidadProducto" for="date" class="form-label">Fecha de Caducidad</label>
-      <input name="fechaCaducidadProducto" type="date" class="form-control" 
-       value="<?php echo $row['fechaCaducidadProducto']?>">
+      <label id="cantidadProducto" for="text" class="form-label">Estado</label>
+      <input name="estado" type="text" class="form-control" 
+       value="<?php echo $row['stateM']?>">
       </div>
       <div class="col-sm-6">
-      <label id="cantidadProducto" for="age" class="form-label">Cantidad</label>
-      <input name="cantidadProducto" type="number" class="form-control" 
-       value="<?php echo $row['cantidadProducto']?>">
-      </div>
-      <div class="col-sm-6">
-      <label id="estadoProducto" for="text" class="form-label">Estado</label>
-      <input name="estadoProducto" type="text" class="form-control" 
-       value="<?php echo $row['estadoProducto']?>">
+      <label id="estadoProducto" for="text" class="form-label">Categoria</label>
+      <input name="categoria" type="text" class="form-control" 
+       value="<?php echo $row['category']?>">
       </div>
       </div>
       <div class="py-4">

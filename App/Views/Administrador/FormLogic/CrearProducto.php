@@ -10,11 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $cantidad = $_POST["Cantidad"];
     $estado = $_POST["Estado"];
     $fechaCaducidad = $_POST["FechaCaducidad"];
+    $categoria =  $_POST["Categoria"];
     $proveedor = $_POST["Proveedor"];
 
-    $insert_producto = $conexion->prepare("CALL CrearProducto(?, ?, ?, ?, ?, ?)");
-    $insert_producto->bind_param("sssssi", $nombre, $formato, $cantidad, $estado,
-    $fechaCaducidad, $proveedor);
+    $insert_producto = $conexion->prepare("CALL INSERTARMEDICINA(?, ?, ?, ?, ?, ?, ?)");
+    $insert_producto->bind_param("ssssssi", $nombre, $formato, $cantidad, $estado,
+    $fechaCaducidad, $categoria, $proveedor);
 
         // Ejecutar la consulta de inserción
         if ($insert_producto->execute()) {

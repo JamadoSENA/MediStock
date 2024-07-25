@@ -36,8 +36,8 @@ if( $validar == null || $validar = ''){
   <div class="col-9 border-left custom-form">
     <br>
     <div>
-      <h4 class="mb-3">Dashboard de Productos
-        <a href="AdministradorProductos.php">
+      <h4 class="mb-3">Dashboard de Proveedores
+        <a href="AdministradorProveedores.php">
           <button class="btn btn-lg float-end custom-btn btn-secondary" type="submit" style="font-size: 15px; margin-right: 5px;">Regresar</button>
         </a>
         <a onclick="window.print()">
@@ -46,16 +46,15 @@ if( $validar == null || $validar = ''){
       </h4>
       <br>
       <div class="table-container">
-      <table id="tablaProductos" class="table table-striped table-hover sticky-header">
-          <caption>Esta tabla muestra los productos registrados.</caption>
+      <table id="tablaProveedores" class="table table-striped table-hover sticky-header">
+          <caption>Esta tabla muestra los proveedores existentes.</caption>
           <thead>
             <tr>
+              <th scope="col">NIT</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Formato</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Fecha Caducidad</th>
-              <th scope="col">Categoria</th>
+              <th scope="col">Direccion</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Correo</th>
             </tr>
           </thead>
           <tbody>
@@ -63,18 +62,17 @@ if( $validar == null || $validar = ''){
             
             require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT * from medicines");
+            $sql = $conexion->query("SELECT * from suppliers");
 
             while ($resultado = $sql->fetch_assoc()){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['nameM']?></td>
-              <td scope="row"><?php echo $resultado ['formatM']?></td>
-              <td scope="row"><?php echo $resultado ['stock']?></td>
-              <td scope="row"><?php echo $resultado ['stateM']?></td>
-              <td scope="row"><?php echo $resultado ['expirationDate']?></td>
-              <td scope="row"><?php echo $resultado ['category']?></td>
+              <td scope="row"><?php echo $resultado ['idSupplier']?></td>
+              <td scope="row"><?php echo $resultado ['nameSU']?></td>
+              <td scope="row"><?php echo $resultado ['addressSU']?></td>
+              <td scope="row"><?php echo $resultado ['phoneNumber']?></td>
+              <td scope="row"><?php echo $resultado ['email']?></td>
             </tr>
             <?php
             }
@@ -104,7 +102,7 @@ if( $validar == null || $validar = ''){
 <script src="../../Recursos/js/Administrador.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    var tabla = $('#tablaProductos').DataTable({
+    var tabla = $('#tablaProveedores').DataTable({
       "language": {
         "search": "Buscar:",
         "lengthMenu": "Mostrar _MENU_ entradas por página",
@@ -121,7 +119,7 @@ if( $validar == null || $validar = ''){
       }
     });
 
-    $('#tablaProductos thead th').each(function() {
+    $('#tablaProveedores thead th').each(function() {
       var titulo = $(this).text();
       $(this).html('<input type="text" placeholder="Buscar ' + titulo + '" />');
     });

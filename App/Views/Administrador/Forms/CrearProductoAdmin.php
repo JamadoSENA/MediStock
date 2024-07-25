@@ -74,12 +74,6 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
-      <li>
-        <a href="../AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Citas Medicas
-        </a>
-      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">
@@ -96,7 +90,7 @@ if( $validar == null || $validar = ''){
       action="../FormLogic/CrearProducto.php" novalidate>
           <div class="row g-3">
             <div class="col-sm-6">
-              <label id="nombreProducto" for="name" class="form-label">Nombre</label>
+              <label id="name" for="name" class="form-label">Nombre</label>
               <input name="Nombre" type="text" class="form-control" 
               value="" required>
             </div>
@@ -104,23 +98,31 @@ if( $validar == null || $validar = ''){
                 Se requiere un nombre válido.
             </div>
             <div class="col-sm-6">
-            <label id="descripcionProducto" for="name" class="form-label">Descripcion</label>
-              <input name="Descripcion" type="text" class="form-control" 
-              value="" required>
-            </div>
-            <div class="invalid-feedback">
-                Se requiere una descripcion válida.
-            </div>
-            <div class="col-md-6">
-              <label id="indicacionesProducto" for="name" class="form-label">Indicaciones de Uso</label>
-              <input name="Indicaciones" type="text" class="form-control"
+            <label id="format" for="text" class="form-label">Formato</label>
+            <input name="Formato" type="text" class="form-control"
                 value="" required>
             </div>
             <div class="invalid-feedback">
-                Se requiere una indicacion válida.
+                Se requiere un formato válido.
             </div>
             <div class="col-sm-6">
-            <label id="fechaCaducidadProducto" for="date" class="form-label">Fecha de Caducidad</label>
+            <label id="stock" for="number" class="form-label">Cantidad</label>
+            <input name="Cantidad" type="number" class="form-control"
+                value="" required>
+            </div>
+            <div class="invalid-feedback">
+                Se requiere una cantidad válida.
+            </div>
+            <div class="col-sm-6">
+            <label id="state" for="text" class="form-label">Estado</label>
+            <input name="Estado" type="text" class="form-control"
+                value="" required>
+            </div>
+            <div class="invalid-feedback">
+                Se requiere un estado válido.
+            </div>
+            <div class="col-sm-6">
+            <label id="expirationDate" for="date" class="form-label">Fecha de Caducidad</label>
             <input name="FechaCaducidad" type="date" class="form-control"
                 value="" required>
             </div>
@@ -128,30 +130,25 @@ if( $validar == null || $validar = ''){
                 Se requiere una fecha válida.
             </div>
             <div class="col-sm-6">
-            <label id="cantidadProducto" for="number" class="form-label">Cantidad</label>
-            <input name="Cantidad" type="number" class="form-control"
-                value="" required>
-            </div>
-            <div class="col-md-6">
-              <label id="estadoProducto" for="name" class="form-label">Estado</label>
-              <input name="Estado" type="text" class="form-control"
+            <label id="state" for="text" class="form-label">Categoria</label>
+            <input name="Categoria" type="text" class="form-control"
                 value="" required>
             </div>
             <div class="invalid-feedback">
-                Se requiere un estado válido.
+                Se requiere una categoria válida.
             </div>
             <div class="col-md-6">
-              <label for="proveedor" class="form-label">Proveedor</label>
+              <label for="supplier" class="form-label">Proveedor</label>
               <select name="Proveedor" class="form-select" id="proveedor" required>
                 <option value="">Elegir...</option>
                 <?php
                 include ("../../../../Config/DataBase.php");
 
-                $sql = $conexion->query("SELECT * FROM proveedor ORDER BY nombreProveedor ASC");
+                $sql = $conexion->query("SELECT * FROM suppliers ORDER BY nameSU ASC");
                 while ($resultado = $sql->fetch_assoc()) {
 
-                echo "<option value='".$resultado['idProveedor']."'>".$resultado
-                ['nombreProveedor']."</option>";
+                echo "<option value='".$resultado['idSupplier']."'>".$resultado
+                ['nameSU']."</option>";
 
                 }
                 ?>

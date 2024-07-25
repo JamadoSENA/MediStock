@@ -36,8 +36,8 @@ if( $validar == null || $validar = ''){
   <div class="col-9 border-left custom-form">
     <br>
     <div>
-      <h4 class="mb-3">Dashboard de Productos
-        <a href="AdministradorProductos.php">
+      <h4 class="mb-3">Dashboard de Usuarios
+        <a href="AdministradorUsuarios.php">
           <button class="btn btn-lg float-end custom-btn btn-secondary" type="submit" style="font-size: 15px; margin-right: 5px;">Regresar</button>
         </a>
         <a onclick="window.print()">
@@ -46,16 +46,15 @@ if( $validar == null || $validar = ''){
       </h4>
       <br>
       <div class="table-container">
-      <table id="tablaProductos" class="table table-striped table-hover sticky-header">
-          <caption>Esta tabla muestra los productos registrados.</caption>
+      <table id="tablaUsuarios" class="table table-striped table-hover sticky-header">
+          <caption>Esta tabla muestra los usuarios existentes.</caption>
           <thead>
             <tr>
+              <th scope="col">Documento</th>
+              <th scope="col">Tipo Documento</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Formato</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Fecha Caducidad</th>
-              <th scope="col">Categoria</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Correo</th>
             </tr>
           </thead>
           <tbody>
@@ -63,18 +62,19 @@ if( $validar == null || $validar = ''){
             
             require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT * from medicines");
+            $sql = $conexion->query("SELECT idUser, CONCAT(nameU, ' ', lastname) AS nombre_completo, 
+            age, phoneNumber, email, documentType, age, gender FROM users");
 
             while ($resultado = $sql->fetch_assoc()){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['nameM']?></td>
-              <td scope="row"><?php echo $resultado ['formatM']?></td>
-              <td scope="row"><?php echo $resultado ['stock']?></td>
-              <td scope="row"><?php echo $resultado ['stateM']?></td>
-              <td scope="row"><?php echo $resultado ['expirationDate']?></td>
-              <td scope="row"><?php echo $resultado ['category']?></td>
+              <td scope="row"><?php echo $resultado ['idUser']?></td>
+              <td scope="row"><?php echo $resultado ['documentType']?></td>
+              <td scope="row"><?php echo $resultado ['nombre_completo']?></td>
+              <td scope="row"><?php echo $resultado ['phoneNumber']?></td>
+              <td scope="row"><?php echo $resultado ['email']?></td>
+              
             </tr>
             <?php
             }
@@ -104,7 +104,7 @@ if( $validar == null || $validar = ''){
 <script src="../../Recursos/js/Administrador.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    var tabla = $('#tablaProductos').DataTable({
+    var tabla = $('#tablaUsuarios').DataTable({
       "language": {
         "search": "Buscar:",
         "lengthMenu": "Mostrar _MENU_ entradas por página",
@@ -121,7 +121,7 @@ if( $validar == null || $validar = ''){
       }
     });
 
-    $('#tablaProductos thead th').each(function() {
+    $('#tablaUsuarios thead th').each(function() {
       var titulo = $(this).text();
       $(this).html('<input type="text" placeholder="Buscar ' + titulo + '" />');
     });

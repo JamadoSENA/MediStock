@@ -74,12 +74,6 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
-      <li>
-        <a href="../AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Citas Medicas
-        </a>
-      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">

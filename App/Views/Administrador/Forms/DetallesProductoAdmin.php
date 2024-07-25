@@ -74,12 +74,6 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
-      <li>
-        <a href="../AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Citas Medicas
-        </a>
-      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">
@@ -93,47 +87,66 @@ if( $validar == null || $validar = ''){
             
             include ('../../../../Config/DataBase.php');
             
-            $sql = "SELECT * FROM producto WHERE idProducto=".$_GET['idProducto'];
+            $sql = "SELECT * FROM medicines WHERE idMedicine=".$_GET['idMedicine'];
+            $resultado = $conexion->query($sql);
+            $row = $resultado->fetch_assoc();
+            // Obtener el nombre del proveedor asociado a este medicamento
+            $sql2 = "SELECT suppliers.*
+            FROM medicinesSuppliers
+            JOIN suppliers ON medicinesSuppliers.fkIdSupplier = suppliers.idSupplier
+            WHERE medicinesSuppliers.fkIdMedicine = " . $_GET['idMedicine'];
+            $resultado2 = $conexion->query($sql2);
+            $row2 = $resultado2->fetch_assoc();
+            
+      ?>
+      <input type="hidden" class="form-control" name="idMedicine" value="<?php echo $row['idMedicine'] ?>">
+      <div class="row g-3">
+      <div class="col-sm-6">
+      <label id="nameMedicine" for="text" class="form-label">Nombre</label>
+      <input name="nombreProducto" type="text" class="form-control" 
+       value="<?php echo $row['nameM']?>" disabled readonly>
+      </div>
+      <div class="col-sm-6">
+      <label id="format" for="text" class="form-label">Formato</label>
+      <input name="formatoMedicina" type="text" class="form-control" 
+       value="<?php echo $row['formatM']?>" disabled readonly>
+      </div>
+      <div class="col-sm-6">
+      <label id="stocck" for="text" class="form-label">Cantidad</label>
+      <input name="cantidadMedicina" type="text" class="form-control" 
+       value="<?php echo $row['stock']?>" disabled readonly>
+      </div>
+      <div class="col-sm-6">
+      <label id="state" for="text" class="form-label">Estado</label>
+      <input name="estado" type="text" class="form-control" 
+       value="<?php echo $row['stateM']?>" disabled readonly>
+      </div>
+      <div class="col-sm-6">
+      <label id="expirationDate" for="date" class="form-label">Fecha de Expiracion</label>
+      <input name="fechaExpiracion" type="date" class="form-control" 
+       value="<?php echo $row['expirationDate']?>" disabled readonly>
+      </div>
+      <div class="col-sm-6">
+      <label id="category" for="text" class="form-label">Categoria</label>
+      <input name="categoriaMedicina" type="text" class="form-control" 
+       value="<?php echo $row['category']?>" disabled readonly>
+      </div>
+      <?php
+            
+            include ('../../../../Config/DataBase.php');
+            // Obtener el nombre del proveedor asociado a este medicamento
+            $sql = "SELECT suppliers.*
+            FROM medicinesSuppliers
+            JOIN suppliers ON medicinesSuppliers.fkIdSupplier = suppliers.idSupplier
+            WHERE medicinesSuppliers.fkIdMedicine = " . $_GET['idMedicine'];
             $resultado = $conexion->query($sql);
             $row = $resultado->fetch_assoc();
             
       ?>
-      <input type="hidden" class="form-control" name="idProducto" value="<?php echo $row['idProducto'] ?>">
-      <div class="row g-3">
       <div class="col-sm-6">
-      <label id="nombreProducto" for="text" class="form-label">Nombre</label>
-      <input name="nombreProducto" type="text" class="form-control" 
-       value="<?php echo $row['nombreProducto']?>" disabled readonly>
-      </div>
-      <div class="col-sm-6">
-      <label id="descripcionProducto" for="text" class="form-label">Descripcion</label>
-      <input name="descripcionProducto" type="text" class="form-control" 
-       value="<?php echo $row['descripcionProducto']?>" disabled readonly>
-      </div>
-      <div class="col-sm-6">
-      <label id="indicacionesProducto" for="text" class="form-label">Indicaciones</label>
-      <input name="indicacionesProducto" type="text" class="form-control" 
-       value="<?php echo $row['indicacionesProducto']?>" disabled readonly>
-      </div>
-      <div class="col-sm-6">
-      <label id="fechaCaducidadProducto" for="date" class="form-label">Fecha de Caducidad</label>
-      <input name="fechaCaducidadProducto" type="date" class="form-control" 
-       value="<?php echo $row['fechaCaducidadProducto']?>" disabled readonly>
-      </div>
-      <div class="col-sm-6">
-      <label id="cantidadProducto" for="age" class="form-label">Cantidad</label>
-      <input name="cantidadProducto" type="number" class="form-control" 
-       value="<?php echo $row['cantidadProducto']?>" disabled readonly>
-      </div>
-      <div class="col-sm-6">
-      <label id="estadoProducto" for="text" class="form-label">Estado</label>
-      <input name="estadoProducto" type="text" class="form-control" 
-       value="<?php echo $row['estadoProducto']?>" disabled readonly>
-      </div>
-      <div class="col-sm-6">
-      <label id="fechaRegistroProducto" for="text" class="form-label">Fecha Registro Producto</label>
-      <input name="fechaRegistroProducto" type="text" class="form-control" 
-       value="<?php echo $row['fechaRegistroProducto']?>" disabled readonly>
+      <label id="nameSupplier" for="text" class="form-label">Proveedor</label>
+      <input name="nombreProveedor" type="text" class="form-control" 
+       value="<?php echo $row['nameSU']?>" disabled readonly>
       </div>
       </div>
       <div class="py-4">

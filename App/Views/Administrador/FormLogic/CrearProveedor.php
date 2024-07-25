@@ -8,12 +8,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nit = $_POST["NIT"];
     $nombre = $_POST["Nombre"];
     $direccion = $_POST["Direccion"];
-    $correo = $_POST["Correo"];
     $telefono = $_POST["Telefono"];
-    $producto = $_POST["Producto"];
+    $correo = $_POST["Correo"];
 
-    $insert_proveedor = $conexion->prepare("CALL CrearProveedor(?, ?, ?, ?, ?, ?)");
-    $insert_proveedor->bind_param("issssi", $nit, $nombre, $direccion, $telefono, $correo, $producto);
+    $insert_proveedor = $conexion->prepare("CALL INSERTARPROVEEDOR(?, ?, ?, ?, ?)");
+    $insert_proveedor->bind_param("issss", $nit, $nombre, $direccion, $correo, $telefono);
 
         // Ejecutar la consulta de inserción
         if ($insert_proveedor->execute()) {

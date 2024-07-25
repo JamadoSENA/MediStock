@@ -74,12 +74,6 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
-      <li>
-        <a href="../AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Citas Medicas
-        </a>
-      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">
@@ -95,44 +89,39 @@ if( $validar == null || $validar = ''){
             
             include ('../../../../Config/DataBase.php');
             
-            $sql = "SELECT * FROM proveedor WHERE idProveedor=".$_GET['idProveedor'];
+            $sql = "SELECT * FROM suppliers WHERE idSupplier=".$_GET['idSupplier'];
             $resultado = $conexion->query($sql);
             $row = $resultado->fetch_assoc();
             
       ?>
       <div class="row g-3">
       <form id="" class="needs-validation" method="post" action="../FormLogic/ActualizarProveedor.php" novalidate>
-      <input type="hidden" class="form-control" name="idProveedor" value="<?php echo $row['idProveedor'] ?>">
+      <input type="hidden" class="form-control" name="idProveedor" value="<?php echo $row['idSupplier'] ?>">
+      <div class="col-sm-6">
+      <label id="nombreProveedor" for="number" class="form-label">NIT</label>
+      <input name="nombreProveedor" type="number" class="form-control" 
+       readonly disable value="<?php echo $row['idSupplier']?>">
+      </div>
       <div class="col-sm-6">
       <label id="nombreProveedor" for="text" class="form-label">Nombre</label>
       <input name="nombreProveedor" type="text" class="form-control" 
-       value="<?php echo $row['nombreProveedor']?>" >
-      </div>
-      <div class="col-sm-6">
-      <label id="departamentoProveedor" for="text" class="form-label">Departamento</label>
-      <input name="departamentoProveedor" type="text" class="form-control" 
-       value="<?php echo $row['departamentoProveedor']?>" >
-      </div>
-      <div class="col-sm-6">
-      <label id="municipioProveedor" for="text" class="form-label">Municipio</label>
-      <input name="municipioProveedor" type="text" class="form-control" 
-       value="<?php echo $row['municipioProveedor']?>" >
+       readonly disable value="<?php echo $row['nameSU']?>">
       </div>
       <div class="col-sm-6">
       <label id="direccionProveedor" for="text" class="form-label">Direccion</label>
       <input name="direccionProveedor" type="text" class="form-control" 
-       value="<?php echo $row['direccionProveedor']?>" >
-      </div>
-      <div class="col-sm-6">
-      <label id="telefonoProveedor" for="number" class="form-label">Telefono</label>
-      <input name="telefonoProveedor" type="number" class="form-control" 
-       value="<?php echo $row['telefonoProveedor']?>" >
+       value="<?php echo $row['addressSU']?>" >
       </div>
       <div class="col-sm-6">
       <label id="correoProveedor" for="email" class="form-label">Correo</label>
       <input name="correoProveedor" type="email" class="form-control" 
-       value="<?php echo $row['correoProveedor']?>" >
+       value="<?php echo $row['email']?>" >
       </div>
+      <div class="col-sm-6">
+      <label id="telefonoProveedor" for="text" class="form-label">Telefono</label>
+      <input name="telefonoProveedor" type="text" class="form-control" 
+       value="<?php echo $row['phoneNumber']?>" >
+      </div>    
       <div class="py-4">
       <button class="btn btn-success float-end custom-btn" style="font-size: 15px; margin-left: 25px;"
        type="submit">Actualizar Proveedor</button>

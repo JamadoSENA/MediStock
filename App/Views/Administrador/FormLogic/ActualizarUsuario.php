@@ -2,18 +2,16 @@
 
 require '../../../../Config/DataBase.php';
 
-    $id = $_POST['idUsuario'];
+    $id = $_POST['idUser'];
     $telefono = $_POST['Telefono'];
     $direccion = $_POST['Direccion'];    
     $correo = $_POST['Correo'];
     $contrasenia = $_POST['Contrasenia'];
-    $rol = $_POST['Rol'];
 
     $sql = "UPDATE users SET      phoneNumber='".$telefono."',
-                                  address='".$direccion."',
+                                  addressU='".$direccion."',
                                   email='".$correo."',
-                                  password='".$contrasenia."',
-                                  fkIdRole='".$rol."'
+                                  passwordU='".$contrasenia."'
                                   WHERE idUser = ".$id."";
 
     if ($resultado = $conexion->query($sql)) {

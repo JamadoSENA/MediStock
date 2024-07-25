@@ -74,12 +74,6 @@ if( $validar == null || $validar = ''){
           Productos
         </a>
       </li>
-      <li>
-        <a href="AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Citas Medicas
-        </a>
-      </li>
     </ul>
   </div>
   <div class="col-9 border-left custom-form">
@@ -99,10 +93,11 @@ if( $validar == null || $validar = ''){
           <thead>
             <tr>
               <th scope="col">Nombre</th>
-              <th scope="col">Fecha Caducidad</th>
+              <th scope="col">Formato</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Estado</th>
-              <th scope="col">Proveedor</th>
+              <th scope="col">Fecha Caducidad</th>
+              <th scope="col">Categoria</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -111,19 +106,18 @@ if( $validar == null || $validar = ''){
             
             require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT * from producto
-            INNER JOIN proveedor ON producto.fk_id_proveedor = proveedor.idProveedor 
-            ORDER BY fechaRegistroProducto DESC");
+            $sql = $conexion->query("SELECT * from medicines");
 
             while ($resultado = $sql->fetch_assoc()){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['nombreProducto']?></td>
-              <td scope="row"><?php echo $resultado ['fechaCaducidadProducto']?></td>
-              <td scope="row"><?php echo $resultado ['cantidadProducto']?></td>
-              <td scope="row"><?php echo $resultado ['estadoProducto']?></td>
-              <td scope="row"><?php echo $resultado ['nombreProveedor']?></td>
+              <td scope="row"><?php echo $resultado ['nameM']?></td>
+              <td scope="row"><?php echo $resultado ['formatM']?></td>
+              <td scope="row"><?php echo $resultado ['stock']?></td>
+              <td scope="row"><?php echo $resultado ['stateM']?></td>
+              <td scope="row"><?php echo $resultado ['expirationDate']?></td>
+              <td scope="row"><?php echo $resultado ['category']?></td>
               <td scope="row">
                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -133,9 +127,9 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/ActualizarProductoAdmin.php?idProducto=<?php echo $resultado['idProducto']?>" class="dropdown-item">Actualizar</a></li>
-                  <li><a href="Forms/DetallesProductoAdmin.php?idProducto=<?php echo $resultado['idProducto']?>" class="dropdown-item">Detalles</a></li>
-                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarProducto.php?Id=<?php echo $resultado['idProducto']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                  <li><a href="Forms/ActualizarProductoAdmin.php?idMedicine=<?php echo $resultado['idMedicine']?>" class="dropdown-item">Actualizar</a></li>
+                  <li><a href="Forms/DetallesProductoAdmin.php?idMedicine=<?php echo $resultado['idMedicine']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarProducto.php?Id=<?php echo $resultado['idMedicine']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
                         height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path
                           d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
@@ -154,7 +148,6 @@ if( $validar == null || $validar = ''){
       </div>
     </div>
       </div>
-    </div>
   </div>
   </div>
 
