@@ -57,21 +57,21 @@ if( $validar == null || $validar = ''){
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <a href="PersonalMedicoUsuarios.php" class="nav-link text-dark">
-          <svg class="bi bi-people me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Usuarios
-        </a>
-      </li>
-      <li>
-        <a href="PersonalMedicoProductos.php" class="nav-link text-dark">
-          <svg class="bi bi-card-checklist me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-          Productos
-        </a>
-      </li>
-      <li>
         <a href="PersonalMedicoCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          <svg class="bi bi-people me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
           Citas Medicas
+        </a>
+      </li>
+      <li>
+        <a href="PersonalMedicoPacientes.php" class="nav-link text-dark">
+          <svg class="bi bi-card-checklist me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          Pacientes
+        </a>
+      </li>
+      <li>
+        <a href="PersonalMedicoPrescripciones.php" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          Prescripciones
         </a>
       </li>
     </ul>
@@ -79,20 +79,26 @@ if( $validar == null || $validar = ''){
   <div class="col-9 border-left custom-form">
       <br>
       <div>
-        <h4 class="mb-3">Dashboard de Productos
+        <h4 class="mb-3">Dashboard de Prescripciones
+        <a href="Forms/CrearPacientePersonalMedico.php"><button class="btn btn-lg float-end custom-btn btn-success" type="submit"
+            style="font-size: 15px; margin-right: 5px;">+ Registrar prescripcion</button></a>
+        <a href="ImprimirPacientes.php"><button class="btn btn-lg float-end custom-btn btn-secondary" type="submit"
+            style="font-size: 15px; margin-right: 5px;">- Generar reporte</button></a>
+        </h4>
         </h4>
       </div>
       <br>
       <div class="table-responsive vh-80">
-        <table id="tablaProductos" class="table table-striped table-hover sticky-header">
-          <caption>Esta tabla muestra los productos registrados.</caption>
+        <table id="tablaPrescripciones" class="table table-striped table-hover sticky-header">
+          <caption>Esta tabla muestra las prescripciones existentes.</caption>
           <thead>
-          <tr>
-              <th scope="col">Nombre</th>
-              <th scope="col">Fecha Caducidad</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Estado</th>
-              <th scope="col">Proveedor</th>
+            <tr>
+              <th scope="col">ID</th> 
+              <th scope="col">Documento Paciente</th>
+              <th scope="col">Nombre Paciente</th>
+              <th scope="col">Fecha y Hora</th>
+              <th scope="col">Documento Medico</th>
+              <th scope="col">Nombre Medico</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -101,19 +107,27 @@ if( $validar == null || $validar = ''){
             
             require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT * from producto
-            INNER JOIN proveedor ON producto.fk_id_proveedor = proveedor.idProveedor 
-            ORDER BY fechaRegistroProducto DESC");
+            $sql = $conexion->query("SELECT  p.documentType || ' ' || p.idPatient AS Documento_Paciente, 
+                                    p.nameP || ' ' || p.lastname AS Nombre_Paciente,
+                                    s.dateS || ' ' || s.hourSS AS Fecha_y_Hora,
+                                    d.documentType || ' ' || d.idUser AS Documento_Medico,
+                                    d.nameU || ' ' || d.lastname AS Nombre_Medico,
+                                    pr.idPrescription
+                                    FROM schedulings s
+                                    JOIN patients p ON s.fkIdPatient = p.idPatient
+                                    JOIN users d ON s.fkIdDoctor = d.idUser
+                                    JOIN prescriptions pr ON pr.fkIdScheduling = s.idScheduling;");
 
             while ($resultado = $sql->fetch_assoc()){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['nombreProducto']?></td>
-              <td scope="row"><?php echo $resultado ['fechaCaducidadProducto']?></td>
-              <td scope="row"><?php echo $resultado ['cantidadProducto']?></td>
-              <td scope="row"><?php echo $resultado ['estadoProducto']?></td>
-              <td scope="row"><?php echo $resultado ['nombreProveedor']?></td>
+              <td scope="row"><?php echo $resultado ['idPrescription']?></td>
+              <td scope="row"><?php echo $resultado ['Documento_Paciente']?></td>
+              <td scope="row"><?php echo $resultado ['Nombre_Paciente']?></td>
+              <td scope="row"><?php echo $resultado ['Fecha_y_Hora']?></td>
+              <td scope="row"><?php echo $resultado ['Documento_Medico']?></td>
+              <td scope="row"><?php echo $resultado ['Nombre_Medico']?></td>
               <td scope="row">
                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -123,7 +137,15 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/DetallesProductoPerson.php?idProducto=<?php echo $resultado['idProducto']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a href="Forms/DetallesPrescripcionPersonalMedico.php?idPrescription=<?php echo $resultado['idPrescription']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarPrescripcion.php?Id=<?php echo $resultado['idPrescription']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path
+                          d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                        <path
+                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                      </svg></a>
+                  </li>
                 </ul>
               </td>
             </tr>
@@ -150,7 +172,7 @@ if( $validar == null || $validar = ''){
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 <script src="../../Recursos/js/Personal.js"></script>
 <script type="text/javascript">
-    let table = new DataTable('#tablaProductos', {
+    let table = new DataTable('#tablaPrescripciones', {
     //Para cambiar el lenguaje a español
     "language": {
         "lengthMenu": "Mostrar _MENU_ registros",

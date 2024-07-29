@@ -25,7 +25,7 @@ if( $validar == null || $validar = ''){
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
   <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../../Recursos/css/Administrador.css">
+  <link rel="stylesheet" href="../../Recursos/css/Personal.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 </head>
 
@@ -52,32 +52,26 @@ if( $validar == null || $validar = ''){
     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="0 0 24 24">
     </svg>
-    <span class="fs-4">Administrador</span>
+    <span class="fs-4">Personal Medico</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <a href="AdministradorUsuarios.php" class="nav-link text-dark">
+        <a href="PersonalMedicoCitas.php" class="nav-link text-dark">
           <svg class="bi bi-people me-2" width="16" height="16"><use xlink:href="#speedometer2"/></svg>
-          Usuarios
-        </a>
-      </li>
-      <li>
-        <a href="AdministradorProveedores.php" class="nav-link text-dark">
-          <svg class="bi bi-card-checklist me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-          Proveedores
-        </a>
-      </li>
-      <li>
-        <a href="AdministradorProductos.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
-          Productos
-        </a>
-      </li>
-      <li>
-        <a href="AdministradorCitas.php" class="nav-link text-dark">
-          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
           Citas Medicas
+        </a>
+      </li>
+      <li>
+        <a href="PersonalMedicoPacientes.php" class="nav-link text-dark">
+          <svg class="bi bi-card-checklist me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+          Pacientes
+        </a>
+      </li>
+      <li>
+        <a href="PersonalMedicoPrescripciones.php" class="nav-link text-dark">
+          <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+          Prescripciones
         </a>
       </li>
     </ul>
@@ -85,20 +79,25 @@ if( $validar == null || $validar = ''){
   <div class="col-9 border-left custom-form">
       <br>
       <div>
-        <h4 class="mb-3">Dashboard de Citas Medicas
+        <h4 class="mb-3">Dashboard de Pacientes
+        <a href="Forms/CrearPacientePersonalMedico.php"><button class="btn btn-lg float-end custom-btn btn-success" type="submit"
+            style="font-size: 15px; margin-right: 5px;">+ Registrar paciente</button></a>
+        <a href="ImprimirPacientes.php"><button class="btn btn-lg float-end custom-btn btn-secondary" type="submit"
+            style="font-size: 15px; margin-right: 5px;">- Generar reporte</button></a>
+        </h4>
         </h4>
       </div>
       <br>
       <div class="table-responsive vh-80">
-        <table id="tablaCitas" class="table table-striped table-hover sticky-header">
-          <caption>Esta tabla muestra las citas medicas registradas.</caption>
+        <table id="tablaPacientes" class="table table-striped table-hover sticky-header">
+          <caption>Esta tabla muestra los pacientes existentes.</caption>
           <thead>
-          <tr>
-              <th scope="col">Documento Paciente</th>
+            <tr>
+            <th scope="col">Tipo Documento</th>
+              <th scope="col">Documento</th>
               <th scope="col">Nombre</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Fecha</th>
-              <th scope="col">Medico</th>
+              <th scope="col">Telefono</th>
+              <th scope="col">Correo</th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -107,21 +106,18 @@ if( $validar == null || $validar = ''){
             
             require("../../../Config/DataBase.php");
             
-            $sql = $conexion->query("SELECT idCita, documentoPaciente, CONCAT(nombrePaciente, ' ', apellidoPaciente) AS nombreCompletoPaciente,
-            CONCAT(nombreUsuario, ' ', apellidoUsuario) AS nombre_completo, tipoCita, fechaCita
-            from cita_medica
-            INNER JOIN usuario ON cita_medica.fk_id_usuario = usuario.idUsuario 
-            ORDER BY fechaCita DESC");
+            $sql = $conexion->query("SELECT idPatient, CONCAT(nameP, ' ', lastname) AS nombre_completo, 
+            age, phoneNumber, email, documentType FROM patients");
 
             while ($resultado = $sql->fetch_assoc()){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['documentoPaciente']?></td>
-              <td scope="row"><?php echo $resultado ['nombreCompletoPaciente']?></td>
-              <td scope="row"><?php echo $resultado ['tipoCita']?></td>
-              <td scope="row"><?php echo $resultado ['fechaCita']?></td>
-              <td scope="row"><?php echo  $resultado ['nombre_completo']?></td>
+              <td scope="row"><?php echo $resultado ['documentType']?></td>
+              <td scope="row"><?php echo $resultado ['idPatient']?></td>
+              <td scope="row"><?php echo $resultado ['nombre_completo']?></td>
+              <td scope="row"><?php echo $resultado ['phoneNumber']?></td>
+              <td scope="row"><?php echo $resultado ['email']?></td>
               <td scope="row">
                 <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -131,7 +127,16 @@ if( $validar == null || $validar = ''){
                   </svg>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="Forms/DetallesCitaAdmin.php?idCita=<?php echo $resultado['idCita']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a href="Forms/ActualizarPacientePersonalMedico.php?idPatient=<?php echo $resultado['idPatient']?>" class="dropdown-item">Actualizar</a></li>
+                  <li><a href="Forms/DetallesPacientePersonalMedico.php?idPatient=<?php echo $resultado['idPatient']?>" class="dropdown-item">Detalles</a></li>
+                  <li><a class="dropdown-item text-danger" class="dropdown-item" href="FormLogic/EliminarPaciente.php?Id=<?php echo $resultado['idPatient']; ?>">Archivar <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                        <path
+                          d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                        <path
+                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                      </svg></a>
+                  </li>
                 </ul>
               </td>
             </tr>
@@ -156,44 +161,27 @@ if( $validar == null || $validar = ''){
     crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-<script src="../../Recursos/js/Administrador.js"></script>
+<script src="../../Recursos/js/Personal.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() {
-    var tabla = $('#tablaCitas').DataTable({
-      "language": {
-        "search": "Buscar:",
-        "lengthMenu": "Mostrar _MENU_ entradas por página",
+    let table = new DataTable('#tablaPacientes', {
+    //Para cambiar el lenguaje a español
+    "language": {
+        "lengthMenu": "Mostrar _MENU_ registros",
         "zeroRecords": "No se encontraron resultados",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-        "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
-        "infoFiltered": "(filtrado de _MAX_ entradas totales)",
-        "paginate": {
-          "first": "Primero",
-          "last": "Último",
-          "next": "Siguiente",
-          "previous": "Anterior"
-        }
-      }
-    });
-
-    $('#tablaCitas thead th').each(function() {
-      var titulo = $(this).text();
-      $(this).html('<input type="text" placeholder="Buscar ' + titulo + '" />');
-    });
-
-    tabla.columns().every(function() {
-      var that = this;
-
-      $('input', this.header()).on('keyup change', function() {
-        if (that.search() !== this.value) {
-          that
-            .search(this.value)
-            .draw();
-        }
-      });
-    });
-  });
-</script>
+        "info": "Mostrando del _START_ al _END_ de _TOTAL_ registros",
+        "infoEmpty": "Mostrando del 0 al 0 de 0 registros",
+        "infoFiltered": "(de un total de _MAX_ registros)",
+        "sSearch": "Buscar:",
+        "oPaginate": {
+            "sFirst": "Primero",
+            "sLast": "Último",
+            "sNext": "Siguiente",
+            "sPrevious": "Anterior"
+        },
+        "sProcessing": "Procesando..."
+    }
+   })
+  </script>
 
 </body>
 

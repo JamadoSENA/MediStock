@@ -51,7 +51,7 @@ BEGIN
 END//
 
 CREATE PROCEDURE INSERTARCITA (
-    IN razon INT (100),
+    IN razon VARCHAR (100),
     IN estado VARCHAR (50),
     IN fecha VARCHAR (10),
     IN hora VARCHAR (5),

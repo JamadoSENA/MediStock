@@ -110,8 +110,8 @@ if( $validar == null || $validar = ''){
             
             ?>
             <tr>
-              <td scope="row"><?php echo $resultado ['idUser']?></td>
               <td scope="row"><?php echo $resultado ['documentType']?></td>
+              <td scope="row"><?php echo $resultado ['idUser']?></td>
               <td scope="row"><?php echo $resultado ['nombre_completo']?></td>
               <td scope="row"><?php echo $resultado ['phoneNumber']?></td>
               <td scope="row"><?php echo $resultado ['email']?></td>
