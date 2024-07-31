@@ -7,9 +7,9 @@ require '../../../../Config/DataBase.php';
     $direccion = $_POST['Direccion'];    
     $correo = $_POST['Correo'];
 
-    $sql = "UPDATE patients SET    phoneNumber='".$telefono."',
+    $sql = "UPDATE patients SET   phoneNumber='".$telefono."',
                                   addressP='".$direccion."',
-                                  email='".$correo."',
+                                  email='".$correo."'
                                   WHERE idPatient = ".$id."";
 
     if ($resultado = $conexion->query($sql)) {

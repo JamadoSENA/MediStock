@@ -9,7 +9,7 @@ require '../../../../Config/DataBase.php';
 
     $sql = "UPDATE schedulings SET  stateS='".$estado."',
                                   dateS='".$fecha."',
-                                  hourS='".$hora."',
+                                  hourSS='".$hora."'
                                   WHERE idScheduling = ".$id."";
 
     if ($resultado = $conexion->query($sql)) {

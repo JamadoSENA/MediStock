@@ -86,8 +86,8 @@ if( $validar == null || $validar = ''){
       </div>
       <br>
       <div class="col-12 custom-form vh-80">
-      <form id="RegistroPaciente" class="needs-validation" method="post" 
-      action="../FormLogic/CrearPaciente.php" novalidate>
+        <form id="RegistroPaciente" class="needs-validation" method="post" 
+        action="../FormLogic/CrearPaciente.php" novalidate>
           <div class="row g-3">
             <div class="col-sm-6">
               <label id="patientDocument" for="number" class="form-label">Cedula</label>
@@ -102,6 +102,7 @@ if( $validar == null || $validar = ''){
               <input name="TipoDocumento" type="text" class="form-control" 
               value="" required>
             </div>
+            </div>
             <div class="invalid-feedback">
                 Se requiere un tipo válido.
             </div>
@@ -113,6 +114,7 @@ if( $validar == null || $validar = ''){
             <div class="invalid-feedback">
                 Se requiere un tipo válido.
             </div>
+            <div class="col-sm-6">
             <label id="lastName" for="name" class="form-label">Apellido</label>
               <input name="Apellido" type="text" class="form-control" 
               value="" required>
@@ -120,6 +122,7 @@ if( $validar == null || $validar = ''){
             <div class="invalid-feedback">
                 Se requiere un apellido válido.
             </div>
+            <div class="col-sm-6">
             <label id="birthdate" for="date" class="form-label">Fecha de Nacimiento</label>
               <input name="FechaNacimiento" type="date" class="form-control" 
               value="" required>
@@ -127,12 +130,7 @@ if( $validar == null || $validar = ''){
             <div class="invalid-feedback">
                 Se requiere una fecha válida.
             </div>
-            <label id="age" for="name" class="form-label">Edad</label>
-              <input name="Edad" type="text" class="form-control" 
-              value="" required readonly>
-            </div>
-			</div>
-                <script>
+            <script>
                     const inputFechaNacimiento = document.getElementById('birthdate');
                     const inputEdad = document.getElementById('age');
 
@@ -182,7 +180,12 @@ if( $validar == null || $validar = ''){
                         this.parentElement.classList.remove('was-validated');
                     }
                     });
-                </script>
+            </script>
+            <div class="col-sm-6">
+            <label id="age" for="name" class="form-label">Edad</label>
+              <input name="Edad" type="text" class="form-control" 
+              value="" required>
+            </div>
             <div class="col-sm-6">
             <label id="gender" for="text" class="form-label">Genero</label>
             <input name="Genero" type="text" class="form-control"
@@ -228,15 +231,16 @@ if( $validar == null || $validar = ''){
             <button class="btn btn-success float-end custom-btn" style="font-size: 15px;"
               type="submit">Registrar Paciente</button>
             </div>
-            </div>
-            </form>
-      </div>
-    </div>
-      </div>
+          </form>
+          </div>
+          </div>
+          </div>  
+        </div>  
+      </div>  
     </div>
   </div>
-  </div>
-
+          
+      
 <!-- Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

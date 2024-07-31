@@ -32,7 +32,7 @@ function acceso_user() {
 
     }else if($filas['fkIdRole'] == 2){ //PersonalMedico
 
-        header('Location: ../App/Views/PersonalMedico/PersonalMedicoUsuarios.php');
+        header('Location: ../App/Views/PersonalMedico/PersonalMedicoPacientes.php');
 
     }else{
 
