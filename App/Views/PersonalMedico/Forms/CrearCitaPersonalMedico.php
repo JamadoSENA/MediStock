@@ -52,7 +52,7 @@ if( $validar == null || $validar = ''){
     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" viewBox="0 0 24 24">
     </svg>
-    <span class="fs-4">Administrador</span>
+    <span class="fs-4">Personal Medico</span>
     </a>
     <hr>
     <ul class="nav nav-pills flex-column mb-auto">
